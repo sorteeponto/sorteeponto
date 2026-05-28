@@ -1,0 +1,2022 @@
+<!DOCTYPE html>  
+<html lang="pt-BR">  
+<head>  
+<meta charset="UTF-8">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sorte &amp; Ponto">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#D4A017">  
+<meta name="apple-mobile-web-app-capable" content="yes">  
+<meta name="apple-mobile-web-app-status-bar-style" content="black">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">  
+<title>$orte & Ponto — É simples, é rápido, é $orte & Ponto.</title>  
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">  
+<style>  
+:root{  
+  --verde:#D4A017;--amarelo:#FFE566;--vermelho:#ff3b3b;  
+  --azul:#c9a84c;--laranja:#e6b84a;  
+  --bg:#0a0a0a;--bg2:#111111;--bg3:#1a1a1a;  
+  --borda:#2a2412;--texto:#f0f0f0;--muted:#666;  
+  --ouro1:#FFE566;--ouro2:#D4A017;--ouro3:#A67C00;  
+}  
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}  
+html{scroll-behavior:smooth;}  
+body{background:var(--bg);color:var(--texto);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;overflow-x:hidden;}  
+  
+/* ── HEADER ── */  
+header{background:var(--bg2);border-bottom:1px solid var(--borda);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:200;}  
+.hdr-logo{display:flex;align-items:center;}  
+.hdr-info{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}  
+.hdr-badge{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);}  
+.hdr-badge strong{color:var(--amarelo);}  
+  
+/* ── TABS (desktop) ── */  
+.tabs{display:flex;border-bottom:1px solid var(--borda);padding:0 16px;background:var(--bg2);overflow-x:auto;scrollbar-width:none;}  
+.tabs::-webkit-scrollbar{display:none;}  
+.tab{padding:11px 14px;cursor:pointer;font-size:10px;font-weight:700;color:var(--muted);transition:all .2s;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;border-bottom:3px solid transparent;}  
+.tab.active{color:var(--ouro1) !important;border-bottom-color:var(--ouro2) !important;}  
+.tab:hover{color:var(--texto);}  
+
+/* ── LAYOUT ── */  
+.content{padding:16px;max-width:1200px;margin:0 auto;}  
+.section{display:none;}.section.active{display:block;}  
+  
+/* ── CARDS ── */  
+.card{background:var(--bg2);border:1px solid var(--borda);border-radius:10px;padding:16px;margin-bottom:12px;}  
+.card-title{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:var(--ouro1);margin-bottom:14px;}  
+  
+/* ── FORMS ── */  
+label{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px;}  
+input[type="text"],textarea,select{width:100%;background:var(--bg3);border:1px solid var(--borda);border-radius:6px;padding:10px 12px;color:var(--texto);font-family:'IBM Plex Mono',monospace;font-size:14px;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none;}  
+input:focus,select:focus,textarea:focus{border-color:var(--ouro2);box-shadow:0 0 0 3px rgba(212,160,23,.1);}  
+select option{background:var(--bg3);}  
+textarea{resize:vertical;min-height:80px;line-height:1.6;}  
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}  
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}  
+@media(max-width:600px){.row2,.row3{grid-template-columns:1fr;}}  
+.hint{font-size:10px;color:var(--muted);margin-top:3px;font-family:'IBM Plex Mono',monospace;}  
+  
+/* ── BUTTONS ── */  
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;border-radius:8px;border:none;cursor:pointer;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;transition:all .15s;font-family:'IBM Plex Sans',sans-serif;touch-action:manipulation;}  
+.btn:active{transform:scale(.96);}  
+.btn-primary{background:var(--ouro2);color:#000;}.btn-primary:hover{background:var(--ouro3);}  
+.btn-secondary{background:transparent;color:var(--texto);border:1px solid var(--borda);}.btn-secondary:hover{border-color:#555;}  
+.btn-danger{background:transparent;color:var(--vermelho);border:1px solid var(--vermelho);padding:6px 10px;font-size:10px;}.btn-danger:hover{background:rgba(255,59,59,.1);}  
+.btn-warning{background:var(--amarelo);color:#000;}.btn-warning:hover{filter:brightness(.92);}  
+.btn-green{background:#2a7d4f;color:#fff;}.btn-green:hover{background:#1e5c39;}  
+.btn-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}  
+.alert{padding:9px 12px;border-radius:6px;font-size:11px;margin-top:8px;display:none;font-family:'IBM Plex Mono',monospace;}  
+.alert.show{display:block;}  
+.alert-error{background:rgba(255,59,59,.1);border:1px solid var(--vermelho);color:var(--vermelho);}  
+.alert-success{background:rgba(212,160,23,.08);border:1px solid var(--ouro2);color:var(--ouro1);}  
+  
+/* ── NÚMERO BALLS ── */  
+.numeros-preview{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;}  
+.nb{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;background:var(--bg3);border:1px solid var(--borda);color:var(--muted);}  
+.nb.invalido{background:rgba(255,59,59,.1);border-color:var(--vermelho);color:var(--vermelho);}  
+.nb.hit{background:var(--ouro2);color:#000;border-color:var(--ouro2);}  
+  
+/* ── GRADE DE NÚMEROS (NOVA!) ── */  
+.num-grid-wrap{margin-top:6px;}  
+.num-grid-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}  
+.num-grid-label .ng-count{font-family:'IBM Plex Mono',monospace;padding:2px 8px;border-radius:20px;border:1px solid var(--borda);color:var(--muted);transition:color .2s,border-color .2s;}  
+.num-grid-label .ng-count.ok{color:var(--ouro1);border-color:var(--ouro2);}  
+.num-grid-label .ng-count.over{color:var(--vermelho);border-color:var(--vermelho);}  
+.num-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;max-width:480px;}  
+@media(max-width:480px){.num-grid{gap:3px;max-width:100%;}}  
+.ng-btn{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:5px;background:var(--bg3);border:1px solid var(--borda);color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;cursor:pointer;transition:all .12s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;}  
+@media(max-width:480px){.ng-btn{font-size:9px;border-radius:4px;}}  
+.ng-btn:hover{border-color:#555;color:var(--texto);}  
+.ng-btn.sel{background:var(--ouro2);color:#000;border-color:var(--ouro2);box-shadow:0 0 8px rgba(212,160,23,.35);transform:scale(1.05);}  
+.ng-btn:active{transform:scale(.93);}  
+.ng-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}  
+.ng-actions .btn{font-size:10px;padding:6px 12px;}  
+  
+/* ── CAIXA ── */  
+.caixa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px;}  
+.caixa-card{background:var(--bg3);border-radius:10px;padding:16px;text-align:center;border:1px solid var(--borda);}  
+.caixa-valor{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;margin-top:4px;}  
+.caixa-label{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);}  
+.caixa-pct{font-size:10px;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-top:2px;}  
+  
+/* ── APOSTADORES ── */  
+.apost-item{background:var(--bg3);border:1px solid var(--borda);border-radius:8px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;}  
+.apost-nome{font-weight:700;font-size:13px;}  
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(85px,1fr));gap:8px;margin-bottom:14px;}  
+.stat-card{background:var(--bg3);border:1px solid var(--borda);border-radius:8px;padding:10px;text-align:center;}  
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:24px;line-height:1;}  
+.stat-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-top:2px;}  
+  
+/* ── HISTÓRICO ── */  
+.hist-item{background:var(--bg3);border:1px solid var(--borda);border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:border-color .2s;}  
+.hist-item:hover{border-color:#444;}  
+.hist-num{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--amarelo);}  
+.hist-meta{font-size:10px;color:var(--muted);font-family:'IBM Plex Mono',monospace;margin-top:2px;}  
+.hs{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--amarelo);color:#000;font-family:'Bebas Neue',sans-serif;font-size:13px;}  
+  
+/* ── RELATÓRIO ── */  
+.rel-header{background:var(--bg3);border:1px solid var(--verde);border-radius:8px;padding:16px;margin-bottom:14px;text-align:center;}  
+.rel-titulo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:4px;color:var(--verde);}  
+table{width:100%;border-collapse:collapse;font-size:11px;}  
+th{background:var(--bg3);padding:8px 6px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);border-bottom:1px solid var(--borda);}  
+td{padding:6px;border-bottom:1px solid var(--borda);vertical-align:middle;}  
+tr:hover td{background:rgba(255,255,255,.01);}  
+.num-cell{font-family:'IBM Plex Mono',monospace;font-size:9px;display:flex;flex-wrap:wrap;gap:2px;}  
+.n{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;border-radius:50%;font-size:8px;background:var(--bg3);border:1px solid var(--borda);}  
+.n.hit{background:var(--verde);color:#000;border-color:var(--verde);font-weight:700;}  
+.overflow-x{overflow-x:auto;}  
+.empty-state{text-align:center;padding:36px;color:var(--muted);font-size:12px;}  
+.empty-state .icon{font-size:38px;margin-bottom:8px;}  
+  
+/* ── CONCURSO BAR ── */  
+.concurso-bar{display:flex;align-items:flex-end;gap:10px;margin-bottom:14px;background:var(--bg2);border:1px solid var(--borda);border-radius:8px;padding:12px 14px;flex-wrap:wrap;}  
+.concurso-bar select{max-width:240px;}  
+.status-badge{font-size:11px;font-family:'IBM Plex Mono',monospace;padding:4px 10px;border-radius:20px;border:1px solid;}  
+.aberto{color:var(--ouro1);border-color:var(--ouro2);}  
+.encerrado{color:var(--laranja);border-color:var(--laranja);}  
+.new-form{background:rgba(0,255,135,.03);border:1px solid rgba(0,255,135,.15);border-radius:8px;padding:14px;margin-bottom:14px;}  
+  
+/* ── PLANILHA ── */  
+.planilha-wrap{background:var(--bg2);border:1px solid var(--borda);border-radius:8px;overflow:hidden;}  
+.planilha-header{background:var(--bg3);padding:12px 16px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:var(--ouro1);display:flex;justify-content:space-between;align-items:center;}  
+.pl-table{width:100%;border-collapse:collapse;font-size:12px;}  
+.pl-table th{background:var(--bg3);padding:8px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);border-bottom:1px solid var(--borda);}  
+.pl-table td{padding:8px 10px;border-bottom:1px solid var(--borda);font-family:'IBM Plex Mono',monospace;font-size:11px;}  
+.pl-table tr:nth-child(even) td{background:rgba(255,255,255,.015);}  
+  
+/* ── TOAST ── */  
+#toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(200px);padding:8px 18px;border-radius:20px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;z-index:9999;transition:transform .3s;white-space:nowrap;background:rgba(212,160,23,.95);color:#000;pointer-events:none;}  
+#toast.show{transform:translateX(-50%) translateY(0) !important;}  
+  
+/* ── WHATSAPP ── */  
+.wats-box{background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.3);border-radius:8px;padding:14px;margin-top:12px;}  
+.wats-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#25d366;margin-bottom:8px;}  
+.wats-text{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--texto);line-height:1.7;white-space:pre-wrap;background:var(--bg3);padding:10px;border-radius:6px;max-height:300px;overflow-y:auto;}  
+  
+/* ══════════════════════════════════════  
+   DASHBOARD (nova tela inicial)  
+══════════════════════════════════════ */  
+.dash-hero{  
+  background:linear-gradient(135deg,#111 0%,#1a1400 50%,#111 100%);  
+  border:1px solid var(--borda);border-radius:12px;  
+  padding:24px 20px;margin-bottom:16px;  
+  position:relative;overflow:hidden;  
+}  
+.dash-hero::before{  
+  content:'';position:absolute;top:-40px;right:-40px;  
+  width:200px;height:200px;  
+  background:radial-gradient(circle,rgba(212,160,23,.12) 0%,transparent 70%);  
+  border-radius:50%;pointer-events:none;  
+}  
+.dash-hero-title{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:var(--muted);margin-bottom:4px;}  
+.dash-concurso{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--ouro1);line-height:1;letter-spacing:2px;}  
+.dash-concurso span{font-size:22px;color:var(--muted);}  
+.dash-data{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);margin-top:6px;}  
+.dash-status{display:inline-block;margin-top:10px;font-size:10px;font-weight:700;padding:4px 12px;border-radius:20px;border:1px solid;}  
+  
+.dash-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}  
+@media(max-width:480px){.dash-kpis{grid-template-columns:repeat(3,1fr);gap:8px;}}  
+.dash-kpi{background:var(--bg2);border:1px solid var(--borda);border-radius:10px;padding:14px 10px;text-align:center;}  
+.dash-kpi-val{font-family:'Bebas Neue',sans-serif;font-size:32px;line-height:1;}  
+.dash-kpi-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-top:2px;}  
+@media(max-width:360px){.dash-kpi-val{font-size:24px;}}  
+  
+.dash-fin{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}  
+@media(max-width:480px){.dash-fin{grid-template-columns:1fr 1fr;}}  
+.dash-fin-card{background:var(--bg2);border:1px solid var(--borda);border-radius:10px;padding:14px 12px;}  
+.dash-fin-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px;}  
+.dash-fin-val{font-family:'Bebas Neue',sans-serif;font-size:22px;line-height:1;}  
+.dash-fin-pct{font-size:9px;font-family:'IBM Plex Mono',monospace;color:var(--muted);margin-top:2px;}  
+  
+.dash-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}  
+.dash-action-btn{background:var(--bg2);border:1px solid var(--borda);border-radius:10px;padding:16px 12px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;cursor:pointer;transition:border-color .2s,background .2s;touch-action:manipulation;}  
+.dash-action-btn:hover,.dash-action-btn:active{border-color:var(--ouro2);background:rgba(212,160,23,.04);}  
+.da-icon{font-size:22px;line-height:1;}  
+.da-label{font-size:11px;font-weight:700;color:var(--texto);}  
+.da-sub{font-size:9px;color:var(--muted);}  
+  
+.dash-recentes{margin-bottom:16px;}  
+.dash-recentes-title{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:var(--muted);margin-bottom:8px;}  
+.dash-rec-item{background:var(--bg2);border:1px solid var(--borda);border-radius:8px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;gap:8px;}  
+.dash-rec-nome{font-size:13px;font-weight:700;}  
+.dash-rec-nums{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);margin-top:2px;}  
+  
+.dash-sem-concurso{text-align:center;padding:40px 20px;}  
+.dash-sem-concurso .big-icon{font-size:56px;margin-bottom:12px;}  
+.dash-sem-concurso h2{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;color:var(--ouro1);margin-bottom:6px;}  
+.dash-sem-concurso p{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6;}  
+  
+/* ── BOTTOM NAV ── */  
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:9000;background:var(--bg2);border-top:1px solid #333;}  
+.bn-inner{display:flex;justify-content:space-around;}  
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;border:none;background:none;color:var(--muted);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-appearance:none;}  
+.bn-item .bn-icon{font-size:20px;line-height:1;}  
+.bn-item.active{color:var(--ouro1);}  
+  
+/* ── MOBILE ADJUSTMENTS ── */  
+@media(max-width:768px){  
+  .bottom-nav{display:block;}  
+  .tabs{display:none;}  
+  .content{padding:12px 12px 80px;}  
+  .content{padding:12px;}  
+  #toast{bottom:72px;}  
+  .card{padding:14px;}  
+  .concurso-bar{padding:10px 12px;}  
+  .dash-concurso{font-size:36px;}  
+  .dash-fin{grid-template-columns:1fr 1fr;}  
+}  
+@media(min-width:769px){  
+  .bottom-nav{display:none;}  
+  .tabs{display:flex;}  
+}  
+  
+/* ── SCROLLBARS ── */  
+.mja-item{background:var(--bg3);border:1px solid var(--borda);border-radius:8px;padding:10px 12px;margin-bottom:8px;}  
+.mja-item:has(input:checked){border-color:var(--ouro2);}  
+::-webkit-scrollbar{width:4px;height:4px;}
+#btn-backup-flutuante{position:fixed;top:62px;right:12px;z-index:8888;background:#D4A017;color:#000;border:none;border-radius:20px;padding:8px 14px;font-size:11px;font-weight:700;cursor:pointer;box-shadow:0 2px 12px rgba(212,160,23,.5);display:none;letter-spacing:.5px;}
+.pl-num-header{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--ouro2);color:#000;font-size:8px;font-weight:700;}
+.pl-nome-cell{font-weight:900;color:var(--ouro1);font-size:13px;}
+.pl-num-cell{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;}
+.datalist-input{position:relative;}
+  
+::-webkit-scrollbar-track{background:var(--bg);}  
+::-webkit-scrollbar-thumb{background:var(--borda);border-radius:2px;}  
+  
+/* ── PRINT ── */  
+@media print {  
+  header,nav,.concurso-bar,.btn-row,button,.wats-box,#lista-recentes,#wats-planilha,#wats-resultado{display:none !important;}  
+  iframe,[class*="tiiny"],[id*="tiiny"],div[style*="position:fixed"],div[style*="position: fixed"],.tiiny-badge,#tiiny-badge,body > div:last-child{display:none !important;}  
+  body{background:#fff !important;color:#000 !important;font-size:9px;margin:0;padding:0;}  
+  .section{display:none !important;}  
+  .section{display:none !important;}  
+  #tab-planilha{display:block !important;}  
+  #tab-cadastro,#tab-apostadores,#tab-caixa,#tab-sorteio,#tab-relatorio,#tab-historico,#tab-dashboard{display:none !important;}  
+  .planilha-wrap{border:2px solid #D4A017 !important;border-radius:0 !important;width:100% !important;}  
+  .planilha-header{background:#D4A017 !important;color:#000 !important;font-size:11px !important;padding:6px 10px !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}  
+  .overflow-x{overflow:visible !important;}  
+  .pl-table{font-size:7px !important;width:100% !important;table-layout:fixed !important;}  
+  .pl-table th{background:#f0f0f0 !important;color:#000 !important;border-bottom:1px solid #D4A017 !important;padding:3px 2px !important;font-size:6px !important;text-align:center !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}  
+  .pl-table td{color:#000 !important;border-bottom:1px solid #eee !important;padding:3px 2px !important;text-align:center !important;word-break:break-all !important;}  
+  .pl-table td:nth-child(2){text-align:left !important;font-weight:700 !important;}  
+  .pl-table tr:nth-child(even) td{background:#f9f9f9 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}  
+  .pl-table tr{page-break-inside:avoid;}  
+  @page{margin:0.5cm;size:A4 landscape;}  
+}  
+</style>  
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCZCMBhGsc8FxQ0B_yNHam4jz50lFlfjFw",
+  authDomain: "sorte-e-ponto.firebaseapp.com",
+  databaseURL: "https://sorte-e-ponto-default-rtdb.firebaseio.com",
+  projectId: "sorte-e-ponto",
+  storageBucket: "sorte-e-ponto.firebasestorage.app",
+  messagingSenderId: "668625981224",
+  appId: "1:668625981224:web:d952264d61ea1c74ee4a1d",
+  measurementId: "G-C8C5MMGQ9V"
+};
+firebase.initializeApp(firebaseConfig);
+const fbDB = firebase.database();
+let fbRef = null;
+let fbSyncEnabled = false;
+
+function iniciarFirebase(userId) {
+  fbRef = fbDB.ref('gestao/' + userId);
+  fbRef.on('value', function(snap) {
+    const data = snap.val();
+    if (data && data.json) {
+      try {
+        const parsed = JSON.parse(data.json);
+        if (parsed && parsed.concursos) {
+          db = parsed;
+          window._lastSaveTs = data.ts || Date.now();
+          try { popularSelects(); } catch(e) {}
+          try { atualizar(); } catch(e) {}
+          try { renderRecentes(); } catch(e) {}
+          try { renderDashboard(); } catch(e) {}
+          try { renderHistorico(); } catch(e) {}
+          // Atualizar UI de conexão
+          var st = document.getElementById('fb-status');
+          if (st) st.innerHTML = '🟢 Conectado como: <b>' + userId + '</b>';
+          var lf = document.getElementById('fb-login-form');
+          if (lf) lf.style.display = 'none';
+          var lw = document.getElementById('fb-logout-wrap');
+          if (lw) lw.style.display = 'block';
+        }
+      } catch(e) {}
+    }
+  });
+  fbSyncEnabled = true;
+  showToast('🔗 Sincronizado com a nuvem!');
+}
+
+function salvarFirebase() {
+  if (!fbRef || !fbSyncEnabled) return;
+  try {
+    window._lastSaveTs = Date.now();
+    fbRef.set({ json: JSON.stringify(db), ts: window._lastSaveTs });
+  } catch(e) {}
+}
+</script>
+</head>  
+<body>  
+  
+<div id="toast"></div>  
+  
+<header>  
+  <div class="hdr-logo">  
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 52" width="200" height="31">  
+      <defs><linearGradient id="ouro" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#FFE566"/><stop offset="50%" style="stop-color:#D4A017"/><stop offset="100%" style="stop-color:#A67C00"/></linearGradient></defs>  
+      <text x="0" y="42" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="48" font-weight="900" fill="#F5F5F5" letter-spacing="-2">$ORTE</text>  
+      <rect x="210" y="4" width="1.5" height="44" fill="url(#ouro)" opacity="0.6"/>  
+      <text x="220" y="38" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="28" font-weight="300" fill="url(#ouro)">&amp;</text>  
+      <text x="242" y="40" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="24" font-weight="700" fill="url(#ouro)" letter-spacing="3">PONTO</text>  
+    </svg>  
+  </div>  
+  <div class="hdr-info">  
+    <div class="hdr-badge">Concurso: <strong id="hdr-num">—</strong></div>  
+    <div class="hdr-badge">Apostadores: <strong id="hdr-total" style="color:var(--amarelo)">0</strong></div>  
+    <div class="hdr-badge" id="hdr-caixa-wrap">Caixa: <strong id="hdr-caixa" style="color:var(--ouro1)">R$ 0,00</strong></div>  
+  </div>  
+</header>  
+  
+<nav class="tabs">  
+  <div class="tab active" onclick="showTab('dashboard',this)">🏠 Início</div>  
+  <div class="tab" onclick="showTab('cadastro',this)">✏️ Cadastrar</div>  
+  <div class="tab" onclick="showTab('apostadores',this)">👥 Apostadores</div>  
+  <div class="tab" onclick="showTab('caixa',this)">💰 Caixa</div>  
+  <div class="tab" onclick="showTab('sorteio',this)">🎱 Sorteio</div>  
+  <div class="tab" onclick="showTab('relatorio',this)">📊 Relatório</div>  
+  <div class="tab" onclick="showTab('planilha',this)">📋 Planilha</div>  
+  <div class="tab" onclick="showTab('historico',this)">📁 Histórico</div>  
+</nav>  
+  
+<div class="content">  
+  
+<div id="tab-dashboard" class="section active">  
+  <div id="dash-content"><div style="text-align:center;padding:60px 20px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px">⏳ Carregando...</div></div>  
+</div>  
+  
+<div id="tab-cadastro" class="section">  
+  <div class="concurso-bar">  
+    <div><label>Concurso ativo</label><select id="sel-c-cad" onchange="selecionarConcurso(this.value)"></select></div>  
+    <div id="badge-cad" class="status-badge aberto"></div>  
+    <button class="btn btn-secondary" onclick="toggleNovoForm()">＋ Novo Concurso</button>  
+    <button class="btn btn-green" onclick="gerarMsgAbertura()">📱 Msg Abertura</button>  
+  </div>  
+  <div id="wats-abertura" style="display:none" class="wats-box">  
+    <div class="wats-title">📱 MENSAGEM DE ABERTURA — GRUPO WHATSAPP</div>  
+    <div class="wats-text" id="wats-abertura-text"></div>  
+    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+      <button class="btn btn-green" onclick="copiarWats('wats-abertura-text')">📋 Copiar Mensagem</button>  
+      <button class="btn btn-green" onclick="abrirLinkWats('wats-abertura-text')">🔗 Enviar por Link</button>  
+    </div>
+  </div>  
+  
+  <div id="novo-form" class="new-form" style="display:none">  
+    <div class="card-title" style="font-size:13px;margin-bottom:10px">CRIAR NOVO CONCURSO</div>  
+    <div class="row3">  
+      <div><label>Número</label><input type="text" id="nc-num" placeholder="Ex: 001"></div>  
+      <div><label>Data do Sorteio</label><input type="text" id="nc-data" placeholder="Ex: 31/05/2026"></div>  
+      <div><label>Ref. Mega Sena</label><input type="text" id="nc-ref" placeholder="Ex: 3010"></div>  
+    </div>  
+    <div class="btn-row">  
+      <button class="btn btn-primary" onclick="criarConcurso()">Criar</button>  
+      <button class="btn btn-secondary" onclick="toggleNovoForm()">Cancelar</button>  
+    </div>  
+  </div>  
+  
+  <div class="card">  
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">  
+      <div class="card-title" style="margin-bottom:0">✏️ NOVO APOSTADOR — R$ 20,00 / aposta</div>  
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">  
+        <div id="cad-total-badge" style="font-size:11px;font-family:'IBM Plex Mono',monospace;color:var(--muted);background:var(--bg3);border:1px solid var(--borda);border-radius:20px;padding:3px 10px"></div>  
+        <div id="limite-info" style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--muted)"></div>  
+      </div>  
+    </div>  
+    <div>
+      <label>Nome do Apostador</label>
+      <input type="text" id="inp-nome" placeholder="Ex: João Silva" autocomplete="off" autocapitalize="words"
+        list="lista-nomes-salvos"
+        oninput="atualizarLimiteInfo();verificarJogosAnteriores()" style="margin-bottom:12px">
+      <datalist id="lista-nomes-salvos"></datalist>
+    </div>
+
+    <div>
+      <label style="display:flex;justify-content:space-between;align-items:center">
+        <span>25 Números (1 a 60)</span>
+        <span id="ng-count" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)">0 / 25</span>
+      </label>
+      <textarea id="inp-nums" placeholder="Cole ou digite os 25 números separados por espaço, vírgula ou quebra de linha"
+        oninput="sincronizarTextoParaGrade()" style="min-height:70px;margin-bottom:4px"></textarea>
+      <div class="hint">Exatamente 25 números únicos entre 1 e 60.</div>
+      <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap">
+        <button class="btn btn-secondary" onclick="limparNumeros()">🗑 Limpar</button>
+        <button class="btn btn-secondary" onclick="sortearAleatorio()">🎲 Deixa a sorte escolher</button>
+      </div>
+    </div>  
+  
+    <div id="alert-cad" class="alert" style="margin-top:10px"></div>  
+    <div class="btn-row">  
+      <button class="btn btn-primary" onclick="adicionarApostador()">＋ Adicionar Apostador</button>  
+      <button id="btn-repetir-anterior" class="btn btn-secondary" style="display:none;border-color:var(--ouro2);color:var(--ouro1)">🔁 Repetir jogo anterior</button>  
+      <button class="btn btn-secondary" onclick="limparForm()">Limpar Tudo</button>  
+    </div>  
+  </div>  
+  
+  <div class="card">  
+    <div class="card-title">🕐 ÚLTIMOS CADASTRADOS</div>  
+    <div id="lista-recentes"><div class="empty-state"><div class="icon">📋</div>Nenhum apostador ainda.</div></div>  
+  </div>  
+</div>  
+  
+<div id="tab-apostadores" class="section">  
+  <div class="concurso-bar">  
+    <div><label>Concurso</label><select id="sel-c-apost" onchange="selecionarConcurso(this.value);renderApostadores()"></select></div>  
+    <div id="badge-apost" class="status-badge aberto"></div>  
+  </div>  
+  <div class="stats-row">  
+    <div class="stat-card"><div class="stat-num" id="st-total" style="color:var(--verde)">0</div><div class="stat-label">Total</div></div>  
+    <div class="stat-card"><div class="stat-num" id="st-v6" style="color:#ffd700">—</div><div class="stat-label">Vencedor</div></div>  
+    <div class="stat-card"><div class="stat-num" id="st-v5" style="color:var(--laranja)">—</div><div class="stat-label">Na Trave</div></div>  
+    <div class="stat-card"><div class="stat-num" id="st-v4" style="color:#00c9ff">—</div><div class="stat-label">Tá Perto</div></div>  
+    <div class="stat-card"><div class="stat-num" id="st-v3" style="color:var(--verde)">—</div><div class="stat-label">Quase Lá</div></div>  
+    <div class="stat-card"><div class="stat-num" id="st-v0" style="color:var(--vermelho)">—</div><div class="stat-label">Pé Frio</div></div>  
+  </div>  
+  <div class="card">  
+    <input type="text" id="busca" placeholder="🔍 Buscar por nome..." oninput="renderApostadores()" style="margin-bottom:12px">  
+    <div id="lista-apostadores"><div class="empty-state"><div class="icon">👥</div>Nenhum apostador.</div></div>  
+  </div>  
+</div>  
+  
+<div id="tab-caixa" class="section">  
+  <div class="concurso-bar">  
+    <div><label>Concurso</label><select id="sel-c-caixa" onchange="selecionarConcurso(this.value);renderCaixa()"></select></div>  
+    <div id="badge-caixa" class="status-badge aberto"></div>  
+  </div>  
+  <div class="caixa-grid">  
+    <div class="caixa-card" style="border-color:rgba(0,255,135,.3)">  
+      <div class="caixa-label">Total Arrecadado</div>  
+      <div class="caixa-valor" id="cx-total" style="color:var(--verde)">R$ 0,00</div>  
+      <div class="caixa-pct">R$ 20,00 × apostadores</div>  
+    </div>  
+    <div class="caixa-card" style="border-color:rgba(255,230,0,.3)">  
+      <div class="caixa-label">🏆 Prêmio (75%)</div>  
+      <div class="caixa-valor" id="cx-premio" style="color:var(--amarelo)">R$ 0,00</div>  
+      <div class="caixa-pct">Para o vencedor dos 6 acertos</div>  
+    </div>  
+    <div class="caixa-card" style="border-color:rgba(10,132,255,.3)">  
+      <div class="caixa-label">🎄 Sorteio Anual (5%)</div>  
+      <div class="caixa-valor" id="cx-anual" style="color:var(--azul)">R$ 0,00</div>  
+      <div class="caixa-pct">Acumulado para o ano</div>  
+    </div>  
+    <div class="caixa-card" style="border-color:rgba(255,107,53,.3)">  
+      <div class="caixa-label">⚙️ Administrativo (20%)</div>  
+      <div class="caixa-valor" id="cx-admin" style="color:var(--laranja)">R$ 0,00</div>  
+      <div class="caixa-pct">Custas administrativas</div>  
+    </div>  
+  </div>  
+  <div class="card" style="border-color:rgba(10,132,255,.3)">  
+    <div class="card-title" style="color:var(--azul)">🎄 ACUMULADO SORTEIO ANUAL</div>  
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--azul)" id="cx-anual-total">R$ 0,00</div>  
+    <div id="cx-anual-detalhe" style="margin-top:12px;font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace"></div>  
+  </div>  
+  <div class="card">  
+    <div class="card-title">📊 HISTÓRICO FINANCEIRO</div>  
+    <div class="overflow-x">  
+      <table><thead><tr><th>Concurso</th><th>Data</th><th>👥 Apostadores</th><th>Total</th><th>Prêmio (75%)</th><th>Anual (5%)</th><th>Admin (20%)</th></tr></thead>  
+      <tbody id="body-caixa"></tbody></table>  
+    </div>  
+  </div>  
+</div>  
+  
+<div id="tab-sorteio" class="section">  
+  <div class="concurso-bar">  
+    <div><label>Concurso</label><select id="sel-c-sort" onchange="selecionarConcurso(this.value);carregarSorteioForm()"></select></div>  
+    <div id="badge-sort" class="status-badge aberto"></div>  
+  </div>  
+  <div class="card">  
+    <div class="card-title">🎱 RESULTADO DO SORTEIO</div>  
+    <div class="row2">  
+      <div>  
+        <label>6 Números Sorteados</label>  
+        <input type="text" id="inp-sort" placeholder="Ex: 4 6 8 18 21 30" oninput="previewSort()">  
+        <div class="hint">Os 6 números sorteados pela Mega Sena.</div>  
+        <div id="preview-sort" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px"></div>  
+      </div>  
+      <div>  
+        <label>Prêmio Principal Mega (R$) — opcional</label>  
+        <input type="text" id="inp-premio-mega" placeholder="Valor oficial da Mega Sena">  
+        <div style="margin-top:10px">  
+          <label>Observações</label>  
+          <input type="text" id="inp-obs" placeholder="Ex: Acumulou, sem vencedor...">  
+        </div>  
+      </div>  
+    </div>  
+    <div id="alert-sort" class="alert"></div>  
+    <div class="btn-row">  
+      <button class="btn btn-warning" onclick="salvarSorteio()">💾 Salvar e Calcular Acertos</button>  
+    </div>  
+  </div>  
+</div>  
+  
+<div id="tab-relatorio" class="section">  
+  <div class="concurso-bar">  
+    <div><label>Concurso</label><select id="sel-c-rel" onchange="selecionarConcurso(this.value);gerarRelatorio()"></select></div>  
+  </div>  
+  <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">  
+    <button class="btn btn-green" onclick="gerarMsgWhatsApp('resultado')">📱 WhatsApp</button>  
+    <button class="btn btn-primary" onclick="visualizarParaCompartilhar('relatorio')">🖨 Imprimir / PDF</button>
+    <button class="btn btn-primary" onclick="exportarRelHTML()">⬇ Baixar HTML</button>  
+  </div>  
+  <div id="wats-resultado" style="display:none" class="wats-box">  
+    <div class="wats-title">📱 MENSAGEM PARA O GRUPO WHATSAPP</div>  
+    <div class="wats-text" id="wats-resultado-text"></div>  
+    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+      <button class="btn btn-green" onclick="copiarWats('wats-resultado-text')">📋 Copiar Mensagem</button>  
+      <button class="btn btn-green" onclick="abrirLinkWats('wats-resultado-text')">🔗 Enviar por Link</button>  
+    </div>
+  </div>  
+  <div id="rel-container"><div class="empty-state"><div class="icon">📊</div>Selecione um concurso com sorteio registrado.</div></div>  
+</div>  
+  
+<div id="tab-planilha" class="section">  
+  <div class="concurso-bar">  
+    <div><label>Concurso</label><select id="sel-c-plan" onchange="selecionarConcurso(this.value);gerarPlanilha()"></select></div>  
+  </div>  
+  <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">  
+    <button class="btn btn-green" onclick="gerarMsgWhatsApp('planilha')">📱 WhatsApp</button>  
+    <button class="btn btn-primary" onclick="visualizarParaCompartilhar('planilha')">🖨 Imprimir / PDF</button>
+    <button class="btn btn-primary" onclick="exportarPlanilhaHTML()">⬇ Baixar HTML</button>  
+  </div>  
+  <div id="wats-planilha" style="display:none" class="wats-box">  
+    <div class="wats-title">📱 MENSAGEM PARA O GRUPO WHATSAPP</div>  
+    <div class="wats-text" id="wats-planilha-text"></div>  
+    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+      <button class="btn btn-green" onclick="copiarWats('wats-planilha-text')">📋 Copiar Mensagem</button>  
+      <button class="btn btn-green" onclick="abrirLinkWats('wats-planilha-text')">🔗 Enviar por Link</button>  
+    </div>
+  </div>  
+  <div id="planilha-container"><div class="empty-state"><div class="icon">📋</div>Selecione um concurso.</div></div>  
+</div>  
+  
+<div id="tab-historico" class="section">  
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px" class="mobile-only-grid">  
+    <button class="dash-action-btn" onclick="showTab('apostadores',null,'bn1' )">  
+      <span class="da-icon">👥</span><span class="da-label">👥 Apostadores</span><span class="da-sub">Ver lista</span>  
+    </button>  
+    <button class="dash-action-btn" onclick="showTab('caixa',null)">  
+      <span class="da-icon">💰</span><span class="da-label">💰 Caixa</span><span class="da-sub">Financeiro</span>  
+    </button>  
+    <button class="dash-action-btn" onclick="showTab('planilha',null)">  
+      <span class="da-icon">📋</span><span class="da-label">📋 Planilha</span><span class="da-sub">Imprimir</span>  
+    </button>  
+  </div>  
+  <div class="card">  
+    <div class="card-title">📁 TODOS OS CONCURSOS</div>  
+    <div id="lista-historico"><div class="empty-state"><div class="icon">📁</div>Nenhum concurso ainda.</div></div>  
+  </div>  
+  <div class="card" style="border-color:rgba(255,59,59,.3)">  
+    <div class="card-title" style="color:var(--vermelho)">⚠️ BACKUP DOS DADOS</div>  
+    <p style="color:var(--muted);font-size:11px;margin-bottom:12px">Faça backup regularmente para não perder os dados!</p>  
+    <div class="btn-row">  
+      <div style="background:var(--bg2);border:1px solid var(--borda);border-radius:8px;padding:12px;margin-bottom:12px">
+  <div class="card-title" style="font-size:11px;margin-bottom:10px">☁️ SINCRONIZAÇÃO ENTRE DISPOSITIVOS</div>
+  <div id="fb-status" style="font-size:11px;color:var(--muted);margin-bottom:8px">⚪ Não conectado</div>
+  <div id="fb-login-form">
+    <input type="text" id="fb-user-id" placeholder="Seu código (ex: danilo123)" style="margin-bottom:6px;font-size:12px">
+    <button class="btn btn-primary" style="width:100%" onclick="conectarFirebase()">🔗 Conectar e Sincronizar</button>
+  </div>
+  <div id="fb-logout-wrap" style="display:none">
+    <button class="btn btn-secondary" style="width:100%" onclick="desconectarFirebase()">Desconectar</button>
+  </div>
+</div>
+<button class="btn btn-secondary" onclick="exportarBackup()">⬇ Backup JSON</button>  
+      <button class="btn btn-secondary" onclick="document.getElementById('file-imp').click()">⬆ Importar</button>  
+      <button class="btn btn-danger" onclick="limparTudo()">🗑 Apagar Tudo</button>  
+    </div>  
+    <input type="file" id="file-imp" accept=".json" style="display:none" onchange="importarBackup(event)">  
+  </div>  
+</div>  
+  
+</div><nav class="bottom-nav">  
+  <div class="bn-inner">  
+    <button class="bn-item active" id="bn0" onclick="showTab('dashboard',null,'bn0')">  
+      <span class="bn-icon">🏠</span>Início  
+    </button>  
+    <button class="bn-item" id="bn1" onclick="showTab('cadastro',null,'bn1')">  
+      <span class="bn-icon">✏️</span>Cadastrar  
+    </button>  
+    <button class="bn-item" id="bn2" onclick="showTab('sorteio',null,'bn2')">  
+      <span class="bn-icon">🎱</span>Sorteio  
+    </button>  
+    <button class="bn-item" id="bn3" onclick="showTab('relatorio',null,'bn3')">  
+      <span class="bn-icon">📊</span>Resultado  
+    </button>  
+    <button class="bn-item" id="bn4" onclick="showTab('historico',null,'bn4')">  
+      <span class="bn-icon">⋯</span>Mais  
+    </button>  
+  </div>  
+</nav>  
+  
+<script>  
+// ── CONFIGURAÇÕES ────────────────────────  
+const VALOR_APOSTA = 20;  
+const PCT_PREMIO   = 0.75;  
+const PCT_ANUAL    = 0.05;  
+const PCT_ADMIN    = 0.20;  
+const MAX_JOGOS    = 5;  
+  
+// ── ESTADO ──────────────────────────────  
+let db = { concursos: [], ativo: null };  
+let numerosGrade = new Set(); // números selecionados na grade  
+  
+// Detectar se localStorage está disponível (Safari iOS bloqueia em file://)  
+function localStorageDisponivel() {  
+  try {  
+    const t = '__test__';  
+    localStorage.setItem(t, t);  
+    localStorage.removeItem(t);  
+    return true;  
+  } catch(e) {  
+    return false;  
+  }  
+}  
+const LS_OK = localStorageDisponivel();  
+  
+// IndexedDB — funciona no Safari iOS mesmo com arquivo local (file://)  
+let idbDb = null;  
+function abrirIndexedDB() {  
+  return new Promise((resolve) => {  
+    if (!window.indexedDB) { resolve(false); return; }  
+    try {  
+      const req = indexedDB.open('SortePontoDB', 1);  
+      req.onupgradeneeded = (e) => {  
+        e.target.result.createObjectStore('dados', { keyPath: 'id' });  
+      };  
+      req.onsuccess = (e) => { idbDb = e.target.result; resolve(true); };  
+      req.onerror = () => resolve(false);  
+    } catch(e) { resolve(false); }  
+  });  
+}  
+function salvarIndexedDB() {  
+  if (!idbDb) return;  
+  try {  
+    const tx = idbDb.transaction('dados', 'readwrite');  
+    tx.objectStore('dados').put({ id: 'sp_db_v2', data: JSON.stringify(db) });  
+  } catch(e) {}  
+}  
+function carregarIndexedDB() {  
+  return new Promise((resolve) => {  
+    if (!idbDb) { resolve(null); return; }  
+    try {  
+      const tx = idbDb.transaction('dados', 'readonly');  
+      const req = tx.objectStore('dados').get('sp_db_v2');  
+      req.onsuccess = (e) => resolve(e.target.result ? e.target.result.data : null);  
+      req.onerror = () => resolve(null);  
+    } catch(e) { resolve(null); }  
+  });  
+}  
+  
+function load() {  
+  try {  
+    if (LS_OK) {  
+      const s = localStorage.getItem('sp_db_v2');  
+      if (s) db = JSON.parse(s);  
+    }  
+  } catch(e) {}  
+  if (!db.concursos) db.concursos = [];  
+  if (db.concursos.length && !db.ativo) db.ativo = db.concursos[db.concursos.length-1].id;  
+}  
+async function loadComIndexedDB() {  
+  // Tentar localStorage primeiro  
+  load();  
+  // Se não tem dados, tentar IndexedDB  
+  if (db.concursos.length === 0) {  
+    const s = await carregarIndexedDB();  
+    if (s) {  
+      try {  
+        const parsed = JSON.parse(s);  
+        if (parsed.concursos && parsed.concursos.length > 0) {  
+          db = parsed;  
+          if (!db.ativo && db.concursos.length) db.ativo = db.concursos[db.concursos.length-1].id;  
+        }  
+      } catch(e) {}  
+    }  
+  }  
+  if (!db.concursos) db.concursos = [];  
+  if (db.concursos.length && !db.ativo) db.ativo = db.concursos[db.concursos.length-1].id;  
+}  
+function save() {
+  agendarBackupAuto();
+  salvarFirebase();
+  try {
+    if (LS_OK) {  
+      localStorage.setItem('sp_db_v2', JSON.stringify(db));  
+      const backupKey = 'sp_backup_' + new Date().toLocaleDateString('pt-BR').replace(/\//g,'-');  
+      localStorage.setItem(backupKey, JSON.stringify(db));  
+    }  
+  } catch(e) {}  
+  atualizar();  
+  // Salvar também em IndexedDB (funciona no Safari iOS com arquivo local)  
+  salvarIndexedDB();  
+}  
+  
+// Backup automático ao fechar/recarregar a página  
+window.addEventListener('beforeunload', () => {  
+  try {  
+    if (LS_OK) {  
+      localStorage.setItem('sp_db_v2', JSON.stringify(db));  
+    }  
+  } catch(e) {}  
+});  
+function getAtivo() { return db.concursos.find(c => c.id === db.ativo); }  
+function getConcurso(id) { return db.concursos.find(c => c.id === id); }  
+  
+// ── FINANCEIRO ────────────────────────────  
+function calcFin(c) {  
+  const total = c.apostadores.length * VALOR_APOSTA;  
+  return {  
+    total,  
+    premio: Math.round(total * PCT_PREMIO * 100) / 100,  
+    anual:  Math.round(total * PCT_ANUAL  * 100) / 100,  
+    admin:  Math.round(total * PCT_ADMIN  * 100) / 100,  
+  };  
+}  
+function totalAnual() { return db.concursos.reduce((acc,c) => acc + calcFin(c).anual, 0); }  
+function fmt(v) { return v.toLocaleString('pt-BR', {style:'currency', currency:'BRL'}); }  
+  
+// ── INIT ─────────────────────────────────  
+async function initApp() {  
+  try { await loadComIndexedDB(); } catch(e) { console.error('load:', e); load(); }  
+  try { construirGrade(); } catch(e) { console.error('grade:', e); }  
+  try { popularSelects(); } catch(e) { console.error('selects:', e); }  
+  try { atualizar(); } catch(e) { console.error('atualizar:', e); }  
+  try { renderRecentes(); } catch(e) { console.error('recentes:', e); }  
+  try { renderDashboard(); } catch(e) {  
+    console.error('dashboard:', e);  
+    const el = document.getElementById('dash-content');  
+    if (el) {  
+      el.innerHTML = '';  
+      const msg = document.createElement('div');  
+      msg.style.cssText = 'text-align:center;padding:40px 20px';  
+      msg.innerHTML = '<div style="font-size:48px;margin-bottom:12px">🎰</div>';  
+      const titulo = document.createElement('div');  
+      titulo.style.cssText = 'font-family:Bebas Neue,sans-serif;font-size:28px;color:#FFE566;margin-bottom:16px';  
+      titulo.textContent = 'BEM-VINDO!';  
+      const btn = document.createElement('button');  
+      btn.style.cssText = 'background:#D4A017;color:#000;border:none;border-radius:8px;padding:14px 28px;font-family:Bebas Neue,sans-serif;font-size:18px;cursor:pointer;display:block;margin:0 auto';  
+      btn.textContent = '＋ CRIAR CONCURSO';  
+      btn.onclick = () => { toggleNovoForm(); showTab('cadastro', document.querySelectorAll('.tab')[1]); };  
+      msg.appendChild(titulo);  
+      msg.appendChild(btn);  
+      el.appendChild(msg);  
+    }  
+  }  
+  try {  
+    const ncData = document.getElementById('nc-data');  
+    if (ncData) ncData.value = new Date().toLocaleDateString('pt-BR');  
+  } catch(e) {}  
+  if (!LS_OK) {  
+    setTimeout(() => showToast('⚠️ Abra via iCloud Drive para salvar dados!'), 1500);  
+  }  
+}  
+// Inicialização robusta para Safari iOS (arquivo local)  
+async function startWhenReady() {  
+  const dashboard = document.getElementById('tab-dashboard');  
+  if (!dashboard) {  
+    setTimeout(startWhenReady, 50);  
+    return;  
+  }  
+  await abrirIndexedDB();  
+  await initApp();  
+}  
+  
+if (document.readyState === 'loading') {  
+  document.addEventListener('DOMContentLoaded', startWhenReady);  
+} else {  
+  startWhenReady();  
+}  
+window.addEventListener('load', async function() {  
+  const dash = document.getElementById('dash-content');  
+  if (dash && dash.innerHTML.includes('Carregando')) {  
+    await abrirIndexedDB();  
+    await initApp();  
+  }  
+});  
+// Último recurso — garante init mesmo se tudo falhar  
+setTimeout(async function() {  
+  const dash = document.getElementById('dash-content');  
+  if (dash && dash.innerHTML.includes('Carregando')) {  
+    await abrirIndexedDB();  
+    await initApp();  
+  }  
+}, 500);  
+  
+function atualizar() { popularSelects(); atualizarHeader(); atualizarBadges(); }  
+  
+// ── GRADE DE NÚMEROS ──────────────────────  
+function construirGrade() {
+  const grid = document.getElementById('num-grid');
+  if (!grid) return;
+  grid.innerHTML = '';  
+  for (let n = 1; n <= 60; n++) {  
+    const btn = document.createElement('button');  
+    btn.type = 'button';  
+    btn.className = 'ng-btn';  
+    btn.textContent = n;  
+    btn.dataset.num = n;  
+    btn.addEventListener('click', () => toggleNumero(n, btn));  
+    grid.appendChild(btn);  
+  }  
+}  
+  
+function toggleNumero(n, btn) {  
+  if (numerosGrade.has(n)) {  
+    numerosGrade.delete(n);  
+    btn.classList.remove('sel');  
+  } else {  
+    if (numerosGrade.size >= 25) {  
+      showToast('⚠️ Máximo de 25 números!');  
+      // shake animation  
+      btn.style.animation = 'none';  
+      btn.offsetHeight;  
+      btn.style.animation = '';  
+      return;  
+    }  
+    numerosGrade.add(n);  
+    btn.classList.add('sel');  
+  }  
+  atualizarContadorGrade();  
+  sincronizarGradeParaTexto();  
+}  
+  
+function atualizarContadorGrade() {  
+  const el = document.getElementById('ng-count');  
+  const n = numerosGrade.size;  
+  el.textContent = `${n} / 25`;  
+  el.className = 'ng-count' + (n === 25 ? ' ok' : n > 25 ? ' over' : '');  
+}  
+  
+function sincronizarGradeParaTexto() {  
+  const ta = document.getElementById('inp-nums');  
+  if (ta) ta.value = [...numerosGrade].sort((a,b)=>a-b).join(' ');  
+}  
+  
+function sincronizarTextoParaGrade() {  
+  const nums = parseNums(document.getElementById('inp-nums').value);  
+  numerosGrade = new Set(nums.filter(n => n >= 1 && n <= 60));  
+  // Atualizar botões  
+  document.querySelectorAll('.ng-btn').forEach(btn => {  
+    const n = parseInt(btn.dataset.num);  
+    btn.classList.toggle('sel', numerosGrade.has(n));  
+  });  
+  atualizarContadorGrade();  
+}  
+  
+function limparNumeros() {  
+  numerosGrade.clear();  
+  document.querySelectorAll('.ng-btn').forEach(btn => btn.classList.remove('sel'));  
+  atualizarContadorGrade();  
+  const ta = document.getElementById('inp-nums');  
+  if (ta) ta.value = '';  
+}  
+  
+function carregarNumerosNaGrade(nums) {  
+  numerosGrade = new Set(nums);  
+  document.querySelectorAll('.ng-btn').forEach(btn => {  
+    btn.classList.toggle('sel', numerosGrade.has(parseInt(btn.dataset.num)));  
+  });  
+  atualizarContadorGrade();  
+  sincronizarGradeParaTexto();  
+}  
+  
+let modoTextoAtivo = false;  
+function toggleModoTexto() {  
+  modoTextoAtivo = !modoTextoAtivo;  
+  document.getElementById('modo-texto-wrap').style.display = modoTextoAtivo ? 'block' : 'none';  
+  document.getElementById('modo-texto-label').textContent = modoTextoAtivo ? 'Ocultar' : 'Digitar';  
+}  
+  
+function sortearAleatorio() {
+  const todos = Array.from({length:60},(_,i)=>i+1);
+  const embaralhados = todos.sort(()=>Math.random()-.5);
+  const selecionados = embaralhados.slice(0,25).sort((a,b)=>a-b);
+  numerosGrade.clear();
+  selecionados.forEach(n => numerosGrade.add(n));
+  const ta = document.getElementById('inp-nums');
+  if (ta) ta.value = selecionados.join(' ');
+  const cnt = document.getElementById('ng-count');
+  if (cnt) cnt.textContent = '25 / 25';
+  showToast('🎲 25 números aleatórios!');
+}  
+  
+// ── SELECTS ──────────────────────────────  
+function popularSelects() {
+  // Atualizar datalist de nomes salvos
+  try {
+    const dl = document.getElementById('lista-nomes-salvos');
+    if (dl) {
+      const nomesUnicos = [...new Set(
+        db.concursos.flatMap(c => (c.apostadores||[]).map(a => a.nome))
+      )].sort((a,b) => a.localeCompare(b,'pt-BR'));
+      dl.innerHTML = nomesUnicos.map(n => '<option value="'+n+'">').join('');
+    }
+  } catch(e) {}  
+  ['sel-c-cad','sel-c-apost','sel-c-caixa','sel-c-sort','sel-c-rel','sel-c-plan'].forEach(id => {  
+    const el = document.getElementById(id); if (!el) return;  
+    el.innerHTML = db.concursos.length  
+      ? [...db.concursos].reverse().map(c =>  
+          `<option value="${c.id}" ${c.id===db.ativo?'selected':''}>#${c.numero} — ${c.data||'s/data'} ${c.encerrado?'✓':''}</option>`)  
+        .join('')  
+      : '<option value="">Nenhum concurso</option>';  
+  });  
+}  
+  
+function selecionarConcurso(id) {  
+  if (id) db.ativo = id;  
+  atualizarBadges(); atualizarHeader();  
+}  
+  
+function atualizarBadges() {  
+  const c = getAtivo();  
+  ['badge-cad','badge-apost','badge-caixa','badge-sort'].forEach(id => {  
+    const el = document.getElementById(id); if (!el) return;  
+    el.textContent = c ? (c.encerrado ? '✓ Encerrado' : '● Aberto') : '—';  
+    el.className = 'status-badge ' + (c ? (c.encerrado ? 'encerrado' : 'aberto') : 'aberto');  
+  });  
+}  
+  
+function atualizarHeader() {  
+  const c = getAtivo();  
+  document.getElementById('hdr-num').textContent   = c ? '#' + c.numero : '—';  
+  document.getElementById('hdr-total').textContent = c ? c.apostadores.length : 0;  
+  document.getElementById('hdr-caixa').textContent = c ? fmt(calcFin(c).total) : 'R$ 0,00';  
+}  
+  
+// ── DASHBOARD ────────────────────────────  
+function renderDashboard() {  
+  const el = document.getElementById('dash-content');  
+  const c  = getAtivo();  
+  
+  if (!c) {  
+    el.innerHTML = `  
+      <div class="dash-sem-concurso">  
+        <div class="big-icon">🎰</div>  
+        <h2>BEM-VINDO!</h2>  
+        <p>Nenhum concurso criado ainda.<br>Crie seu primeiro concurso para começar.</p>  
+        <button class="btn btn-primary" style="font-size:13px;padding:14px 28px" onclick="showTab('cadastro',null,'bn1')">＋ Criar Primeiro Concurso</button>  
+      </div>`;  
+    return;  
+  }  
+  
+  const f = calcFin(c);  
+  const sorteado = c.sorteio && c.sorteio.numeros.length === 6;  
+  const vencedores = sorteado ? c.apostadores.filter(a => a.acertos === 6) : [];  
+  const melhorAcerto = sorteado ? Math.max(...c.apostadores.map(a => a.acertos), 0) : 0;  
+  const recentes = [...c.apostadores].reverse().slice(0, 3);  
+  
+  el.innerHTML = `  
+    <div class="dash-hero">  
+      <div class="dash-hero-title">CONCURSO ATIVO</div>  
+      <div class="dash-concurso"><span>#</span>${c.numero}</div>  
+      <div class="dash-data">📅 ${c.data || 'Data não definida'}${c.refMega ? ` &nbsp;·&nbsp; Mega Sena #${c.refMega}` : ''}</div>  
+      <div class="dash-status ${c.encerrado ? 'encerrado' : 'aberto'}">${c.encerrado ? '✓ Encerrado' : '● Aberto para apostas'}</div>  
+      ${sorteado ? `<div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap">  
+        ${c.sorteio.numeros.map(n=>`<div style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--ouro2);color:#000;font-family:'Bebas Neue',sans-serif;font-size:16px;font-weight:700;box-shadow:0 0 10px rgba(212,160,23,.4)">${n}</div>`).join('')}  
+      </div>` : ''}  
+    </div>  
+  
+    <div class="dash-kpis">  
+      <div class="dash-kpi">  
+        <div class="dash-kpi-val" style="color:var(--amarelo)">${c.apostadores.length}</div>  
+        <div class="dash-kpi-lbl">Apostas</div>  
+      </div>  
+      <div class="dash-kpi">  
+        <div class="dash-kpi-val" style="color:var(--ouro1);font-size:22px">${fmt(f.total)}</div>  
+        <div class="dash-kpi-lbl">💰 Caixa</div>  
+      </div>  
+      <div class="dash-kpi">  
+        <div class="dash-kpi-val" style="color:var(--ouro2);font-size:22px">${fmt(f.premio)}</div>  
+        <div class="dash-kpi-lbl">Prêmio 75%</div>  
+      </div>  
+    </div>  
+  
+    ${sorteado && vencedores.length ? `  
+    <div style="background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.4);border-radius:10px;padding:16px;margin-bottom:16px;text-align:center">  
+      <div style="font-size:28px;margin-bottom:4px">🏆</div>  
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:#ffd700">VENCEDOR!</div>  
+      <div style="font-size:16px;font-weight:700;margin-top:4px">${vencedores.map(a=>a.nome).join(', ')}</div>  
+      <div style="font-size:13px;color:var(--muted);margin-top:4px">Prêmio: <strong style="color:var(--amarelo)">${fmt(f.premio)}</strong></div>  
+    </div>` : ''}  
+  
+    <div class="dash-fin">  
+      <div class="dash-fin-card">  
+        <div class="dash-fin-lbl">🏆 Prêmio</div>  
+        <div class="dash-fin-val" style="color:var(--amarelo)">${fmt(f.premio)}</div>  
+        <div class="dash-fin-pct">75% do caixa</div>  
+      </div>  
+      <div class="dash-fin-card">  
+        <div class="dash-fin-lbl">🎄 Anual</div>  
+        <div class="dash-fin-val" style="color:var(--azul)">${fmt(f.anual)}</div>  
+        <div class="dash-fin-pct">5% do caixa</div>  
+      </div>  
+      <div class="dash-fin-card">  
+        <div class="dash-fin-lbl">⚙️ Admin</div>  
+        <div class="dash-fin-val" style="color:var(--laranja)">${fmt(f.admin)}</div>  
+        <div class="dash-fin-pct">20% do caixa</div>  
+      </div>  
+      <div class="dash-fin-card">  
+        <div class="dash-fin-lbl">🎄 Acum. Anual</div>  
+        <div class="dash-fin-val" style="color:var(--azul);font-size:18px">${fmt(totalAnual())}</div>  
+        <div class="dash-fin-pct">todos concursos</div>  
+      </div>  
+    </div>  
+  
+    <div class="dash-actions">  
+      <button class="dash-action-btn" onclick="showTab('cadastro',null,'bn1')">  
+        <span class="da-icon">✏️</span>  
+        <span class="da-label">✏️ Cadastrar</span>  
+        <span class="da-sub">Novo apostador</span>  
+      </button>  
+      <button class="dash-action-btn" onclick="showTab('sorteio',null,'bn2')">  
+        <span class="da-icon">🎱</span>  
+        <span class="da-label">🎱 Sorteio</span>  
+        <span class="da-sub">Registrar resultado</span>  
+      </button>  
+      <button class="dash-action-btn" onclick="showTab('relatorio',null,'bn3')">  
+        <span class="da-icon">📊</span>  
+        <span class="da-label">📊 Relatório</span>  
+        <span class="da-sub">Ver acertos</span>  
+      </button>  
+      <button class="dash-action-btn" onclick="showTab('planilha',null)">  
+        <span class="da-icon">📋</span>  
+        <span class="da-label">📋 Planilha</span>  
+        <span class="da-sub">Imprimir / exportar</span>  
+      </button>  
+      <button class="dash-action-btn" onclick="showTab('apostadores',null)">  
+        <span class="da-icon">👥</span>  
+        <span class="da-label">👥 Apostadores</span>  
+        <span class="da-sub">${c.apostadores.length} cadastrado(s)</span>  
+      </button>  
+      <button class="dash-action-btn" onclick="toggleNovoFormDash()">  
+        <span class="da-icon">＋</span>  
+        <span class="da-label">Novo Concurso</span>  
+        <span class="da-sub">Criar concurso</span>  
+      </button>  
+    </div>  
+  
+    ${recentes.length ? `  
+    <div class="dash-recentes">  
+      <div class="dash-recentes-title">ÚLTIMOS APOSTADORES</div>  
+      ${recentes.map(a => `  
+        <div class="dash-rec-item">  
+          <div>  
+            <div class="dash-rec-nome">${a.nome}</div>  
+            <div class="dash-rec-nums">${a.numeros.slice(0,8).join(' · ')}${a.numeros.length > 8 ? ' ...' : ''}</div>  
+          </div>  
+          ${sorteado ? `<span style="font-size:11px;font-weight:700;color:${acertoCor(a.acertos)}">${a.acertos}pts</span>` : ''}  
+        </div>`).join('')}  
+    </div>` : ''}  
+  `;  
+}  
+  
+function toggleNovoFormDash() {  
+  showTab('cadastro', null, 'bn1');  
+  setTimeout(() => {  
+    toggleNovoForm();  
+    document.getElementById('novo-form').scrollIntoView({behavior:'smooth'});  
+  }, 100);  
+}  
+  
+// ── CONCURSO ─────────────────────────────  
+function toggleNovoForm() {  
+  const f = document.getElementById('novo-form');  
+  const abrindo = f.style.display === 'none';  
+  f.style.display = abrindo ? 'block' : 'none';  
+  if (abrindo) {  
+    // Sugerir próximo número automaticamente  
+    const el = document.getElementById('nc-num');  
+    if (el && !el.value) {  
+      if (db.concursos.length === 0) {  
+        el.value = '001';  
+      } else {  
+        const nums = db.concursos.map(c => parseInt(c.numero) || 0);  
+        const proximo = Math.max(...nums) + 1;  
+        el.value = String(proximo).padStart(3, '0');  
+      }  
+    }  
+    // Sugerir data do próximo sábado  
+    const dataEl = document.getElementById('nc-data');  
+    if (dataEl && !dataEl.value) {  
+      const hoje = new Date();  
+      const diasParaSabado = (6 - hoje.getDay() + 7) % 7 || 7;  
+      const sabado = new Date(hoje);  
+      sabado.setDate(hoje.getDate() + diasParaSabado);  
+      dataEl.value = sabado.toLocaleDateString('pt-BR');  
+    }  
+  }  
+}  
+  
+function criarConcurso() {  
+  const numero = document.getElementById('nc-num').value.trim();  
+  const data   = document.getElementById('nc-data').value.trim();  
+  const ref    = document.getElementById('nc-ref').value.trim();  
+  if (!numero) { alert('Informe o número do concurso.'); return; }  
+  if (db.concursos.find(c => c.numero === numero)) { alert('Já existe um concurso com esse número.'); return; }  
+  const id = 'c' + Date.now();  
+  db.concursos.push({ id, numero, data, refMega: ref, apostadores: [], sorteio: null, encerrado: false });  
+  db.ativo = id;  
+  save(); toggleNovoForm();  
+  document.getElementById('nc-num').value = '';  
+  document.getElementById('nc-ref').value = '';  
+  renderRecentes(); renderHistorico(); renderDashboard();  
+  showToast('✅ Concurso #' + numero + ' criado!');  
+}  
+  
+// ── APOSTADORES ──────────────────────────  
+function adicionarApostador() {
+  const c = getAtivo();
+  if (!c) { alert('Crie um concurso primeiro.'); return; }
+  if (c.encerrado) { alert('Concurso encerrado.'); return; }
+  const nome = document.getElementById('inp-nome').value.trim();
+  // Pegar números do textarea (modo principal agora)
+  const txtArea = document.getElementById('inp-nums');
+  let nums = [];
+  if (txtArea && txtArea.value.trim()) {
+    nums = parseNums(txtArea.value);
+  } else {
+    nums = [...numerosGrade].sort((a,b)=>a-b);
+  }  
+  const al   = document.getElementById('alert-cad');  
+  if (!nome) { showAlert(al,'error','Informe o nome do apostador.'); return; }  
+  const erros = val25(nums);  
+  if (erros.length) { showAlert(al,'error',erros[0]); return; }  
+  
+  const jogosDoApostador = c.apostadores.filter(a => a.nome.toLowerCase() === nome.toLowerCase());  
+  if (jogosDoApostador.length >= MAX_JOGOS) {  
+    showAlert(al,'error',`${nome} já atingiu o limite de ${MAX_JOGOS} jogos neste concurso!`); return;  
+  }  
+  if (jogosDoApostador.length > 0) {  
+    const numsStr = JSON.stringify(nums.sort((a,b)=>a-b));  
+    const jogoDuplicado = jogosDoApostador.find(j => JSON.stringify([...j.numeros].sort((a,b)=>a-b)) === numsStr);  
+    if (jogoDuplicado) {  
+      if (!confirm(`${nome} já tem um jogo com esses mesmos números. Adicionar mesmo assim?`)) return;  
+    }  
+  }  
+  
+  let acertos = 0, status = '';  
+  if (c.sorteio && c.sorteio.numeros.length === 6) {  
+    acertos = nums.filter(n => c.sorteio.numeros.includes(n)).length;  
+    status = getStatus(acertos);  
+  }  
+  
+  const obs = '';  
+  c.apostadores.push({ id: Date.now(), nome, numeros: nums, acertos, status, obs });  
+  save(); renderRecentes(); renderDashboard();  
+  showAlert(al,'success',`✓ ${nome} adicionado! Total: ${c.apostadores.length} — Caixa: ${fmt(calcFin(c).total)}`);  
+  limparForm();  
+}  
+  
+function repetirJogo(cid, aid) {  
+  const c = getConcurso(cid); if (!c) return;  
+  const a = c.apostadores.find(x => x.id === aid); if (!a) return;  
+  const ativo = getAtivo();  
+  if (ativo) {  
+    const jogosDoApostador = (ativo.apostadores||[]).filter(x => x.nome.toLowerCase() === a.nome.toLowerCase());  
+    if (jogosDoApostador.length >= MAX_JOGOS) {  
+      alert(`${a.nome} já atingiu o limite de ${MAX_JOGOS} jogos neste concurso!`); return;  
+    }  
+  }  
+  document.getElementById('inp-nome').value = a.nome;  
+  carregarNumerosNaGrade(a.numeros);  
+  showTab('cadastro', null, 'bn1');  
+  showToast(`🔁 Números de ${a.nome} carregados! Confirme para adicionar.`);  
+}  
+  
+// Buscar jogos de um apostador no concurso anterior  
+function buscarJogosAnteriores(nome) {  
+  if (db.concursos.length === 0) return [];  
+  // Buscar em todos os concursos exceto o ativo, do mais recente para o mais antigo  
+  const anteriores = [...db.concursos]  
+    .filter(c => c.id !== db.ativo)  
+    .reverse(); // mais recente primeiro  
+  for (const c of anteriores) {  
+    const jogos = (c.apostadores||[]).filter(a => a.nome.toLowerCase() === nome.toLowerCase());  
+    if (jogos.length) return jogos.map(j => ({ ...j, concursoNum: c.numero }));  
+  }  
+  return [];  
+}  
+  
+// Quando digita o nome, mostrar botão de repetir do concurso anterior  
+function verificarJogosAnteriores() {  
+  const nome = document.getElementById('inp-nome').value.trim();  
+  const el = document.getElementById('btn-repetir-anterior');  
+  if (!el) return;  
+  if (!nome) { el.style.display = 'none'; return; }  
+  const jogos = buscarJogosAnteriores(nome);  
+  if (jogos.length) {  
+    el.style.display = 'inline-flex';  
+    el.textContent = '🔁 Ver ' + jogos.length + ' jogo(s) anterior(es)';  
+    el.onclick = () => abrirModalJogosAnteriores(nome, jogos);  
+  } else {  
+    el.style.display = 'none';  
+  }  
+}  
+  
+function abrirModalJogosAnteriores(nome, jogos) {  
+  const old = document.getElementById('modal-jogos-ant');  
+  if (old) old.remove();  
+  const ativo = getAtivo();  
+  const jogosJaCadastrados = ativo ? (ativo.apostadores||[]).filter(a => a.nome.toLowerCase() === nome.toLowerCase()).length : 0;  
+  const vagas = MAX_JOGOS - jogosJaCadastrados;  
+  let jogosHTML = '';  
+  jogos.forEach((j, i) => {  
+    const chk = i < vagas ? 'checked' : '';  
+    const dis = i >= vagas ? 'disabled' : '';  
+    const nums = j.numeros.map(n => '<span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--bg);border:1px solid var(--borda);font-family:monospace;font-size:9px;color:var(--muted);margin:2px">' + n + '</span>').join('');  
+    jogosHTML += '<div class="mja-item">' +  
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">' +  
+        '<span style="font-family:Bebas Neue,sans-serif;font-size:14px;color:var(--ouro1)">JOGO ' + (i+1) + ' — #' + j.concursoNum + '</span>' +  
+        '<label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:11px;color:var(--muted)">' +  
+          'Repetir <input type="checkbox" id="chk-' + i + '" ' + chk + ' ' + dis + ' style="width:16px;height:16px;accent-color:var(--ouro2)">' +  
+        '</label>' +  
+      '</div>' +  
+      '<div style="display:flex;flex-wrap:wrap;gap:2px">' + nums + '</div>' +  
+    '</div>';  
+  });  
+  const corVagas = vagas > 0 ? 'var(--ouro1)' : 'var(--vermelho)';  
+  const modal = document.createElement('div');  
+  modal.id = 'modal-jogos-ant';  
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';  
+  modal.innerHTML =  
+    '<div style="background:var(--bg2);border:1px solid var(--ouro2);border-radius:14px;padding:20px;max-width:500px;width:100%;max-height:88vh;overflow-y:auto">' +  
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">' +  
+        '<div style="font-family:Bebas Neue,sans-serif;font-size:15px;letter-spacing:2px;color:var(--ouro1)">🔁 ' + nome.toUpperCase() + '</div>' +  
+        '<span onclick="document.getElementById(&quot;modal-jogos-ant&quot;).remove()" style="cursor:pointer;color:var(--muted);font-size:22px">✕</span>' +  
+      '</div>' +  
+      '<div style="font-size:11px;color:var(--muted);font-family:IBM Plex Mono,monospace;margin-bottom:12px;padding:8px;background:var(--bg3);border-radius:6px">' +  
+        'Vagas disponíveis: <strong style="color:' + corVagas + '">' + vagas + '</strong> de ' + MAX_JOGOS + ' jogos' +  
+      '</div>' +  
+      jogosHTML +  
+      '<div style="display:flex;gap:8px;margin-top:14px">' +  
+        '<button class="btn btn-primary" style="flex:1" onclick="adicionarJogosSelecionados()">＋ Adicionar Selecionados</button>' +  
+        '<button class="btn btn-secondary" onclick="document.getElementById(&quot;modal-jogos-ant&quot;).remove()">Cancelar</button>' +  
+      '</div>' +  
+    '</div>';  
+  window._jogosModal = { nome, jogos };  
+  document.body.appendChild(modal);  
+}  
+  
+function adicionarJogosSelecionados() {  
+  const { nome, jogos } = window._jogosModal;  
+  const c = getAtivo();  
+  if (!c) { alert('Crie um concurso primeiro.'); return; }  
+  if (c.encerrado) { alert('Concurso encerrado.'); return; }  
+  let adicionados = 0;  
+  for (let i = 0; i < jogos.length; i++) {  
+    const chk = document.getElementById('chk-' + i);  
+    if (!chk || !chk.checked) continue;  
+    const jaTemEsteJogo = c.apostadores.filter(a => a.nome.toLowerCase() === nome.toLowerCase());  
+    if (jaTemEsteJogo.length >= MAX_JOGOS) { showToast('Limite de ' + MAX_JOGOS + ' jogos atingido!'); break; }  
+    const nums = jogos[i].numeros;  
+    let acertos = 0, status = '';  
+    if (c.sorteio && c.sorteio.numeros.length === 6) {  
+      acertos = nums.filter(n => c.sorteio.numeros.includes(n)).length;  
+      status = getStatus(acertos);  
+    }  
+    c.apostadores.push({ id: Date.now() + i, nome, numeros: nums, acertos, status, obs: '' });  
+    adicionados++;  
+  }  
+  if (adicionados > 0) {  
+    save(); renderRecentes(); renderDashboard();  
+    const m = document.getElementById('modal-jogos-ant');  
+    if (m) m.remove();  
+    showToast('✅ ' + adicionados + ' jogo(s) adicionado(s) para ' + nome + '!');  
+  } else {  
+    showToast('Selecione pelo menos um jogo.');  
+  }  
+}  
+  
+function removerApostador(cid, aid) {  
+  if (!confirm('Remover este apostador?')) return;  
+  const c = getConcurso(cid); if (!c) return;  
+  c.apostadores = c.apostadores.filter(a => a.id !== aid);  
+  save(); renderRecentes(); renderApostadores(); renderDashboard();  
+}  
+  
+function limparForm() {
+  document.getElementById('inp-nome').value = '';
+  const ta = document.getElementById('inp-nums'); if (ta) ta.value = '';
+  const cnt = document.getElementById('ng-count'); if (cnt) cnt.textContent = '0 / 25';  
+  
+  limparNumeros();  
+}  
+  
+// ── SORTEIO ──────────────────────────────  
+function carregarSorteioForm() {  
+  const c = getAtivo(); if (!c || !c.sorteio) return;  
+  document.getElementById('inp-sort').value        = c.sorteio.numeros.join(' ');  
+  document.getElementById('inp-premio-mega').value = c.sorteio.premioMega || '';  
+  document.getElementById('inp-obs').value         = c.sorteio.obs || '';  
+  previewSort();  
+}  
+  
+function previewSort() {  
+  const nums = parseNums(document.getElementById('inp-sort').value);  
+  const div  = document.getElementById('preview-sort'); div.innerHTML = '';  
+  for (let i = 0; i < 6; i++) {  
+    const el = document.createElement('div');  
+    el.style.cssText = `width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-family:'Bebas Neue',sans-serif;font-size:17px;${nums[i]?'background:var(--amarelo);color:#000;box-shadow:0 0 10px rgba(255,230,0,.4)':'background:var(--bg3);border:1px solid var(--borda);color:var(--muted)'}`;  
+    el.textContent = nums[i] || '?';  
+    div.appendChild(el);  
+  }  
+}  
+  
+function salvarSorteio() {  
+  const c  = getAtivo(); if (!c) { alert('Selecione concurso.'); return; }  
+  const nums = parseNums(document.getElementById('inp-sort').value);  
+  const al   = document.getElementById('alert-sort');  
+  const erros = val6(nums); if (erros.length) { showAlert(al,'error',erros[0]); return; }  
+  c.sorteio = {  
+    numeros:    nums,  
+    premioMega: document.getElementById('inp-premio-mega').value.trim(),  
+    obs:        document.getElementById('inp-obs').value.trim()  
+  };  
+  c.encerrado = true;  
+  c.apostadores.forEach(a => {  
+    a.acertos = a.numeros.filter(n => nums.includes(n)).length;  
+    a.status  = getStatus(a.acertos);  
+  });  
+  save(); renderHistorico(); renderDashboard();  
+  showAlert(al,'success',`✓ Sorteio salvo! ${c.apostadores.length} apostador(es) calculado(s).`);  
+  showToast('🎱 Sorteio registrado com sucesso!');  
+}  
+  
+// ── CAIXA ────────────────────────────────  
+function renderCaixa() {  
+  const c = getAtivo(); if (!c) return;  
+  const f = calcFin(c);  
+  document.getElementById('cx-total').textContent  = fmt(f.total);  
+  document.getElementById('cx-premio').textContent = fmt(f.premio);  
+  document.getElementById('cx-anual').textContent  = fmt(f.anual);  
+  document.getElementById('cx-admin').textContent  = fmt(f.admin);  
+  document.getElementById('cx-anual-total').textContent = fmt(totalAnual());  
+  const detalhe = db.concursos.map(cc => `#${cc.numero}(${cc.data||'s/data'}): ${fmt(calcFin(cc).anual)}`).join(' | ');  
+  document.getElementById('cx-anual-detalhe').textContent = detalhe || 'Nenhum concurso ainda.';  
+  document.getElementById('body-caixa').innerHTML = [...db.concursos].reverse().map(cc => {  
+    const ff = calcFin(cc);  
+    const bold = cc.id === db.ativo ? 'font-weight:700;color:var(--amarelo)' : '';  
+    return `<tr style="${bold}"><td>#${cc.numero}</td><td>${cc.data||'—'}</td><td>${cc.apostadores.length}</td><td>${fmt(ff.total)}</td><td>${fmt(ff.premio)}</td><td>${fmt(ff.anual)}</td><td>${fmt(ff.admin)}</td></tr>`;  
+  }).join('');  
+}  
+  
+// ── APOSTADORES LIST ─────────────────────  
+function renderApostadores() {  
+  const el = document.getElementById('lista-apostadores');  
+  const c  = getAtivo();  
+  if (!c) { el.innerHTML = '<div class="empty-state"><div class="icon">👥</div>Selecione um concurso.</div>'; return; }  
+  const busca = (document.getElementById('busca').value||'').toLowerCase();  
+  let lista = c.apostadores;  
+  if (busca) lista = lista.filter(a => a.nome.toLowerCase().includes(busca));  
+  el.innerHTML = lista.length ? lista.map(a => itemApost(a,c)).join('') : '<div class="empty-state"><div class="icon">🔍</div>Nenhum resultado.</div>';  
+  const ts = c.sorteio && c.sorteio.numeros.length === 6;  
+  document.getElementById('st-total').textContent = c.apostadores.length;  
+  [[6,'st-v6'],[5,'st-v5'],[4,'st-v4'],[3,'st-v3'],[0,'st-v0']].forEach(([n,id]) =>  
+    document.getElementById(id).textContent = ts ? c.apostadores.filter(a=>a.acertos===n).length : '—');  
+}  
+  
+function itemApost(a, c) {  
+  const ts = c && c.sorteio && c.sorteio.numeros.length === 6;  
+  const cor = acertoCor(a.acertos);  
+  const sorteados = c.sorteio ? c.sorteio.numeros : [];  
+  const nums = a.numeros.map(n =>  
+    `<div class="nb${sorteados.includes(n)?' hit':''}" style="width:26px;height:26px;font-size:9px">${n}</div>`  
+  ).join('');  
+  const jogosDoApostador = c.apostadores.filter(x => x.nome.toLowerCase() === a.nome.toLowerCase());  
+  const jogoIdx = jogosDoApostador.findIndex(x => x.id === a.id) + 1;  
+  const totalJogos = jogosDoApostador.length;  
+  return `<div class="apost-item">  
+    <div style="flex:1">  
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">  
+        <div class="apost-nome">${a.nome}</div>  
+        <span style="font-size:9px;background:var(--bg2);border:1px solid var(--borda);border-radius:20px;padding:2px 8px;font-family:'IBM Plex Mono',monospace;color:var(--muted)">Jogo ${jogoIdx}/${totalJogos}</span>  
+      </div>  
+      ${a.obs ? `<div style="font-size:10px;color:var(--azul);font-family:'IBM Plex Mono',monospace;margin-top:2px">📝 ${a.obs}</div>` : ''}  
+      <div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:6px">${nums}</div>  
+      ${ts ? `<span style="font-size:10px;font-weight:700;color:${cor};margin-top:4px;display:block">${a.acertos} acerto(s) — ${a.status}</span>` : ''}  
+    </div>  
+    <div style="display:flex;flex-direction:column;gap:4px">  
+      <button class="btn btn-secondary" style="font-size:9px;padding:4px 8px" onclick="repetirJogo('${c.id}',${a.id})" title="Repetir este jogo">🔁</button>  
+      <button class="btn btn-danger" onclick="removerApostador('${c.id}',${a.id})">✕</button>  
+    </div>  
+  </div>`;  
+}  
+  
+function atualizarBadgeCadTotal() {  
+  const el = document.getElementById('cad-total-badge');  
+  if (!el) return;  
+  const c = getAtivo();  
+  if (!c) { el.textContent = ''; return; }  
+  el.textContent = `👥 ${c.apostadores.length} apostador(es) · 💰 ${fmt(calcFin(c).total)}`;  
+  el.style.color = c.apostadores.length > 0 ? 'var(--ouro1)' : 'var(--muted)';  
+}  
+  
+function renderRecentes() {  
+  const el = document.getElementById('lista-recentes');  
+  const c  = getAtivo();  
+  if (!c || !c.apostadores.length) {  
+    el.innerHTML = '<div class="empty-state"><div class="icon">📋</div>Nenhum apostador neste concurso.</div>'; return;  
+  }  
+  el.innerHTML = [...c.apostadores].reverse().slice(0,5).map(a => itemApost(a,c)).join('');  
+  atualizarBadgeCadTotal();  
+}  
+  
+// ── RELATÓRIO ────────────────────────────  
+function gerarRelatorio() {  
+  const c  = getAtivo();  
+  const el = document.getElementById('rel-container');  
+  if (!c || !c.sorteio) {  
+    el.innerHTML = '<div class="empty-state"><div class="icon">📊</div>Concurso sem sorteio registrado.</div>';  
+    document.getElementById('wats-resultado').style.display = 'none'; return;  
+  }  
+  const f = calcFin(c);  
+  const sorteados = c.sorteio.numeros;  
+  const sorted = [...c.apostadores].sort((a,b) => b.acertos - a.acertos);  
+  const rows = sorted.map((a,i) => {  
+    const nums = a.numeros.map(n => `<span class="n${sorteados.includes(n)?' hit':''}">${n}</span>`).join('');  
+    const cor = acertoCor(a.acertos);  
+    return `<tr><td style="color:var(--muted);font-size:10px">${i+1}</td><td style="font-weight:700">${a.nome}</td><td style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:${cor}">${a.acertos}</td><td style="font-size:10px;font-weight:700;color:${cor}">${a.status}</td><td><div class="num-cell">${nums}</div></td></tr>`;  
+  }).join('');  
+  el.innerHTML = `  
+    <div class="rel-header">  
+      <div class="rel-titulo">CONCURSO #${c.numero}</div>  
+      <div style="color:var(--muted);font-size:11px;margin-top:4px;font-family:'IBM Plex Mono',monospace">  
+        ${c.data||''} &nbsp;|&nbsp; REF: ${c.refMega||'—'} &nbsp;|&nbsp;  
+        Sorteados: <strong style="color:var(--amarelo)">${sorteados.join(' · ')}</strong>  
+      </div>  
+      <div style="margin-top:8px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;font-size:11px">  
+        <span>👥 Apostas: <strong style="color:var(--texto)">${c.apostadores.length}</strong></span>  
+        <span>🏆 Prêmio: <strong style="color:var(--amarelo)">${fmt(f.premio)}</strong></span>  
+        <span>🎄 Sorteio Anual: <strong style="color:var(--azul)">${fmt(f.anual)}</strong></span>  
+      </div>  
+    </div>  
+    ${sorted.filter(a=>a.acertos===6).map(a=>`<div style="margin-bottom:10px"><span style="background:#ffd700;color:#000;padding:4px 12px;border-radius:20px;font-weight:700;font-size:12px">🏆 VENCEDOR: ${a.nome}</span></div>`).join('')}  
+    <div class="overflow-x"><table><thead><tr><th>#</th><th>Nome</th><th>Acertos</th><th>Status</th><th>Números</th></tr></thead><tbody>${rows}</tbody></table></div>`;  
+}  
+  
+// ── PLANILHA ─────────────────────────────  
+function gerarPlanilha() {
+  const c  = getAtivo();
+  const el = document.getElementById('planilha-container');
+  if (!c || !c.apostadores.length) {
+    el.innerHTML = '<div class="empty-state"><div class="icon">📋</div>Nenhum apostador neste concurso.</div>';
+    document.getElementById('wats-planilha').style.display = 'none'; return;
+  }
+  const porId = [...c.apostadores].sort((a,b) => a.id - b.id);
+  const jogosMap = {};
+  porId.forEach(a => {
+    const nome = a.nome.toLowerCase();
+    if (!jogosMap[nome]) jogosMap[nome] = 0;
+    jogosMap[nome]++;
+    a._jogoNum = jogosMap[nome];
+  });
+  const sorted = [...c.apostadores].sort((a,b) => {
+    const nomeComp = a.nome.localeCompare(b.nome, 'pt-BR');
+    if (nomeComp !== 0) return nomeComp;
+    return a._jogoNum - b._jogoNum;
+  });
+  const rows = sorted.map((a,i) => {
+    const jogosDoApost = c.apostadores.filter(x => x.nome.toLowerCase() === a.nome.toLowerCase());
+    const nomeDisplay = jogosDoApost.length > 1 ? a.nome+' <span style="font-size:10px;color:var(--muted)">(J'+a._jogoNum+')</span>' : a.nome;
+    const numCells = a.numeros.map(n=>'<td style="text-align:center;padding:4px 2px"><span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--bg3);border:1px solid var(--borda);font-size:9px;font-family:monospace">'+n+'</span></td>').join('');
+    const bg = i%2===0 ? '' : 'background:var(--bg2)';
+    return '<tr style="'+bg+'"><td style="color:var(--muted);text-align:center;padding:6px 4px">'+( i+1)+'</td><td style="font-weight:700;color:var(--ouro1);padding:6px 8px">'+nomeDisplay+'</td>'+numCells+'</tr>';
+  }).join('');
+  const colNums = Array.from({length:25},(_,i)=>'<th style="text-align:center;min-width:28px;padding:4px 2px"><span class="pl-num-header">'+(i+1)+'</span></th>').join('');  
+  el.innerHTML = `  
+    <div class="planilha-wrap">  
+      <div class="planilha-header">  
+        <span>CONCURSO #${c.numero} — ${c.data||'s/ data'} — ${sorted.length} apostadores</span>  
+        <span style="font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace">A → Z</span>  
+      </div>  
+      <div class="overflow-x">  
+        <table class="pl-table">  
+          <thead><tr><th style="text-align:center">#</th><th style="min-width:160px">Nome</th>${colNums}</tr></thead>  
+          <tbody>${rows}</tbody>  
+        </table>  
+      </div>  
+    </div>`;  
+}  
+  
+// ── MENSAGENS WHATSAPP ───────────────────  
+function gerarMsgWhatsApp(tipo) {  
+  const c = getAtivo(); if (!c) return;  
+  
+  if (tipo === 'planilha') {  
+    if (!c.apostadores.length) { alert('Nenhum apostador cadastrado.'); return; }  
+    const sorted = [...c.apostadores].sort((a,b) => a.nome.localeCompare(b.nome, 'pt-BR'));  
+    let msg = `🎰 $ORTE & PONTO — #${c.numero}\n`;  
+    msg += `📅 ${c.data||'—'} · 👥 ${c.apostadores.length} apostas · 🏆 ${fmt(calcFin(c).premio)}\n`;  
+    msg += `━━━━━━━━━━━━━━━━━━━━━━━━\n`;  
+    const nomesUnicos = [...new Set(sorted.map(a=>a.nome))];  
+    nomesUnicos.forEach((nome,i) => {  
+      const jogos = sorted.filter(a=>a.nome===nome).sort((a,b)=>(a._jogoNum||1)-(b._jogoNum||1));  
+      msg += `${String(i+1).padStart(2,'0')}. ${nome}\n`;  
+      if(jogos.length===1){ msg += `${jogos[0].numeros.join(' · ')}\n`; }  
+      else { jogos.forEach((j,idx)=>{ msg += `J${idx+1}: ${j.numeros.join(' · ')}\n`; }); }  
+      msg += `\n`;  
+    });  
+    msg += `━━━━━━━━━━━━━━━━━━━━━━━━\nConfira seus números! Boa sorte! 🍀`;  
+    document.getElementById('wats-planilha-text').textContent = msg;  
+    document.getElementById('wats-planilha').style.display = 'block';  
+  }  
+  
+  if (tipo === 'resultado') {  
+    if (!c.sorteio) { alert('Registre o sorteio primeiro.'); return; }  
+    const f = calcFin(c);  
+    const eAcerto = (n) => n===6?'🏆':n===5?'😰':n===4?'🎯':n===3?'👀':n===2?'😅':n===1?'🫠':'🥶';  
+    const porId = [...c.apostadores].sort((a,b)=>a.id-b.id);  
+    const jMap = {};  
+    porId.forEach(a=>{ const k=a.nome.toLowerCase(); if(!jMap[k])jMap[k]=0; jMap[k]++; a._jn=jMap[k]; });  
+    const grupos = {};  
+    c.apostadores.forEach(a=>{ const k=a.nome.toLowerCase(); if(!grupos[k])grupos[k]={nome:a.nome,jogos:[]}; grupos[k].jogos.push(a); });  
+    const lista = Object.values(grupos);  
+    lista.forEach(g=>{ g.melhor=Math.max(...g.jogos.map(j=>j.acertos)); g.jogos.sort((a,b)=>a._jn-b._jn); });  
+    lista.sort((a,b)=>b.melhor-a.melhor||a.nome.localeCompare(b.nome,'pt-BR'));  
+    const venc = lista.filter(g=>g.melhor===6);  
+    let msg = `🎱 *$ORTE & PONTO — #${c.numero}*\n🔢 *${c.sorteio.numeros.join(' · ')}*\n━━━━━━━━━━━━━━━━━━━━━━━━\n`;  
+    if (venc.length) { msg += `🏆 *VENCEDOR: ${venc.map(g=>g.nome).join(', ')}*\n💰 Prêmio: *${fmt(f.premio)}*\n`; }  
+    else { msg += `😔 *Sem vencedor — prêmio acumula!*\n🏆 *${fmt(f.premio)}*\n`; }  
+    msg += `━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;  
+    lista.forEach((g,i)=>{  
+      if(g.jogos.length===1){ msg += `${String(i+1).padStart(2,'0')}. ${eAcerto(g.melhor)} ${g.nome} — ${g.melhor}pt\n`; }  
+      else { msg += `${String(i+1).padStart(2,'0')}. ${eAcerto(g.melhor)} ${g.nome}\n`; g.jogos.forEach((j,idx)=>{ msg += `   ${eAcerto(j.acertos)} J${idx+1}: ${j.acertos}pt\n`; }); }  
+    });  
+    msg += `━━━━━━━━━━━━━━━━━━━━━━━━\n_Obrigado pela participação! 🍀_`;  
+    document.getElementById('wats-resultado-text').textContent = msg;  
+    document.getElementById('wats-resultado').style.display = 'block';  
+  }  
+}  
+  
+function atualizarLimiteInfo() {  
+  const nome = document.getElementById('inp-nome').value.trim();  
+  const el = document.getElementById('limite-info'); if (!el) return;  
+  const c = getAtivo();  
+  if (!c || !nome) { el.textContent = ''; return; }  
+  // Conta APENAS no concurso ativo — cada concurso tem limite independente  
+  const jogos = c.apostadores.filter(a => a.nome.toLowerCase() === nome.toLowerCase());  
+  const restantes = MAX_JOGOS - jogos.length;  
+  if (jogos.length === 0) {  
+    // Verificar se jogou em concurso anterior — mostrar aviso para repetir  
+    const ant = buscarJogosAnteriores(nome);  
+    if (ant.length > 0) {  
+      el.style.color = 'var(--azul)';  
+      el.textContent = `${nome} jogou no concurso #${ant[0].concursoNum} — clique em 🔁 para repetir`;  
+    } else {  
+      el.textContent = '';  
+    }  
+    return;  
+  }  
+  el.style.color = restantes > 0 ? 'var(--ouro1)' : 'var(--vermelho)';  
+  el.textContent = restantes > 0  
+    ? `${nome}: ${jogos.length}/${MAX_JOGOS} jogos neste concurso — pode fazer mais ${restantes}`  
+    : `⚠️ ${nome}: limite de ${MAX_JOGOS} jogos atingido neste concurso!`;  
+}  
+  
+function gerarMsgAbertura() {  
+  const c = getAtivo(); if (!c) { alert('Selecione um concurso primeiro.'); return; }  
+  const f = calcFin(c);  
+  let msg = `🎰 *$ORTE & PONTO — Concurso #${c.numero} ABERTO!*\n\n`;  
+  msg += `📅 Data do sorteio: *${c.data||'—'}*\n`;  
+  if (c.refMega) msg += `🔢 Referência Mega Sena: #${c.refMega}\n`;  
+  msg += `\n💰 *Valor da aposta: R$ 20,00*\n`;  
+  msg += `🏆 *Prêmio atual: ${fmt(f.premio)}*\n`;  
+  msg += `👥 Apostadores: ${c.apostadores.length}\n`;  
+  msg += `\n📋 *Como participar:*\n`;  
+  msg += `1️⃣ Escolha seus 25 números (de 1 a 60)\n`;  
+  msg += `2️⃣ Envie os números aqui no grupo\n`;  
+  msg += `3️⃣ Faça o Pix de R$ 20,00 por jogo\n`;  
+  msg += `4️⃣ Envie o comprovante\n`;  
+  msg += `\n_Quanto mais apostadores, maior o prêmio! Convide seus amigos! 🍀_`;  
+  document.getElementById('wats-abertura-text').textContent = msg;  
+  document.getElementById('wats-abertura').style.display = 'block';  
+  document.getElementById('wats-abertura').scrollIntoView({behavior:'smooth'});  
+}  
+  
+function copiarWats(id) {  
+  const texto = document.getElementById(id).textContent;  
+  navigator.clipboard.writeText(texto).then(() => showToast('📋 Mensagem copiada!'));  
+}  
+  
+// ── HISTÓRICO ────────────────────────────  
+function renderHistorico() {  
+  const el = document.getElementById('lista-historico'); if (!el) return;  
+  if (!db.concursos.length) {  
+    el.innerHTML = '<div class="empty-state"><div class="icon">📁</div>Nenhum concurso ainda.</div>'; return;  
+  }  
+  el.innerHTML = [...db.concursos].reverse().map(c => {  
+    const f = calcFin(c);  
+    const venc = c.sorteio ? c.apostadores.filter(a=>a.acertos===6).length : '—';  
+    const bolas = c.sorteio ? c.sorteio.numeros.map(n=>`<div class="hs">${n}</div>`).join('') :  
+      '<span style="color:var(--muted);font-size:10px">Aguardando sorteio</span>';  
+    return `<div class="hist-item" onclick="irParaConcurso('${c.id}')">  
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">  
+        <div>  
+          <div class="hist-num">#${c.numero}</div>  
+          <div class="hist-meta">${c.data||'s/data'} · ${c.apostadores.length} apostadores · ${fmt(f.total)}</div>  
+          <div class="hist-meta" style="margin-top:2px">Prêmio: ${fmt(f.premio)} · Anual: ${fmt(f.anual)} · Admin: ${fmt(f.admin)}</div>  
+        </div>  
+        <div style="display:flex;gap:6px;align-items:center">  
+          ${c.encerrado ? `<span style="font-size:10px;color:var(--laranja)">✓ Encerrado · ${venc} vencedor(es)</span>` : `<span style="font-size:10px;color:var(--verde)">● Aberto</span>`}  
+          <button class="btn btn-danger" onclick="event.stopPropagation();excluirConcurso('${c.id}')">✕</button>  
+        </div>  
+      </div>  
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:8px">${bolas}</div>  
+    </div>`;  
+  }).join('');  
+}  
+  
+function irParaConcurso(id) {  
+  db.ativo = id; save();  
+  showTab('relatorio', null, 'bn3'); gerarRelatorio();  
+}  
+  
+function excluirConcurso(id) {  
+  const c = getConcurso(id);  
+  if (!confirm(`Excluir concurso #${c.numero}? Esta ação não pode ser desfeita!`)) return;  
+  db.concursos = db.concursos.filter(x => x.id !== id);  
+  if (db.ativo === id) db.ativo = db.concursos.length ? db.concursos[db.concursos.length-1].id : null;  
+  save(); renderHistorico(); renderDashboard();  
+}  
+  
+// ── TABS ─────────────────────────────────  
+const tabMap = {dashboard:0,cadastro:1,apostadores:2,caixa:3,sorteio:4,relatorio:5,planilha:6,historico:7};  
+  
+const bnMap={dashboard:'bn0',cadastro:'bn1',sorteio:'bn2',relatorio:'bn3',historico:'bn4',apostadores:'bn4',caixa:'bn4',planilha:'bn4'};  
+  
+function showTab(name, el, bnId) {  
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));  
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));  
+  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));  
+  
+  document.getElementById('tab-' + name).classList.add('active');  
+  
+  if (el) { el.classList.add('active'); }  
+  else {  
+    const tabs = document.querySelectorAll('.tab');  
+    if (tabs[tabMap[name]]) tabs[tabMap[name]].classList.add('active');  
+  }  
+  
+  const bnAtivo = bnId || bnMap[name]; if(bnAtivo){const b=document.getElementById(bnAtivo);if(b)b.classList.add('active');}  
+  if (name==='dashboard')  { renderDashboard(); }  
+  if (name==='cadastro') { atualizarBadgeCadTotal(); }  
+  if (name==='apostadores') renderApostadores();  
+  if (name==='caixa')       renderCaixa();  
+  if (name==='relatorio')   gerarRelatorio();  
+  if (name==='planilha')    gerarPlanilha();  
+  if (name==='historico')   renderHistorico();  
+  if (name==='sorteio')     carregarSorteioForm();  
+  
+  window.scrollTo({top:0,behavior:'smooth'});  
+}  
+  
+// ── EXPORT (ATUALIZADO) ───────────────────────────────  
+
+function imprimirSecao(tipo) {  
+  const c = getAtivo(); if (!c) return;  
+  if (tipo === 'relatorio' && !c.sorteio) { showToast('Registre o sorteio primeiro.'); return; }  
+  if (tipo === 'planilha' && !c.apostadores.length) { showToast('Nenhum apostador cadastrado.'); return; }  
+  // Mostrar só a seção correta e imprimir  
+  const secaoId = tipo === 'relatorio' ? 'tab-relatorio' : 'tab-planilha';  
+  const secao = document.getElementById(secaoId);  
+  // Guardar estado atual  
+  const allSections = document.querySelectorAll('.section');  
+  const active = document.querySelector('.section.active');  
+  // Ativar a seção para impressão  
+  allSections.forEach(s => s.style.display = 'none');  
+  secao.style.display = 'block';  
+  window.print();  
+  // Restaurar estado  
+  allSections.forEach(s => s.style.display = '');  
+  if (active) active.style.display = 'block';  
+}  
+
+function visualizarParaCompartilhar(tipo) {  
+  const c = getAtivo(); if (!c) return;  
+  if (tipo === "relatorio" && !c.sorteio) { showToast("Registre o sorteio primeiro."); return; }  
+  if (tipo === "planilha" && !c.apostadores.length) { showToast("Nenhum apostador cadastrado."); return; }  
+  
+  // A função imprimirSecao já isola o HTML e chama window.print(), 
+  // que é a forma nativa e perfeita de gerar PDF tanto no Mac quanto no iPhone (Safari).
+  imprimirSecao(tipo);  
+}
+
+function abrirLinkWats(id) {
+  const texto = document.getElementById(id).textContent;
+  window.open('https://wa.me/?text=' + encodeURIComponent(texto), '_blank');
+}
+  
+function exportarBackup() {  
+  download(`backup-sorteeponto-${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.json`, JSON.stringify(db, null, 2), 'application/json');  
+  showToast('✅ Backup salvo!');  
+}  
+function importarBackup(e) {  
+  const file = e.target.files[0]; if (!file) return;  
+  const reader = new FileReader();  
+  reader.onload = ev => {  
+    try {  
+      db = JSON.parse(ev.target.result);  
+      save(); renderRecentes(); renderHistorico(); renderDashboard();  
+      showToast('✅ Backup importado!');  
+    } catch(err) { alert('Arquivo inválido.'); }  
+  };  
+  reader.readAsText(file);  
+}  
+function limparTudo() {  
+  if (!confirm('⚠️ Apagar TODOS os dados permanentemente?')) return;  
+  if (!confirm('Tem CERTEZA? Todos os concursos e apostadores serão apagados!')) return;  
+  try { localStorage.removeItem('sp_db_v2'); localStorage.clear(); } catch(e) {}  
+  db = { concursos: [], ativo: null };  
+  popularSelects(); atualizarHeader(); atualizarBadges();  
+  renderHistorico(); renderRecentes(); renderDashboard();  
+  showToast('🗑 Dados apagados com sucesso!');  
+}  
+  
+function download(filename, content, type) {  
+  const a = document.createElement('a');  
+  a.href = URL.createObjectURL(new Blob([content], {type}));  
+  a.download = filename; a.click();  
+}  
+  
+// ── UTILS ────────────────────────────────  
+function parseNums(str) {  
+  return str.split(/[\s,;\n\r]+/).map(n=>parseInt(n)).filter(n=>!isNaN(n));  
+}  
+function val25(nums) {  
+  const e=[];  
+  if(nums.length!==25) e.push(`Precisa de exatamente 25 números. Selecionado: ${nums.length}.`);  
+  const inv=nums.filter(n=>n<1||n>60); if(inv.length) e.push(`Números fora do intervalo (1-60): ${inv.join(', ')}`);  
+  const rep=nums.filter((n,i)=>nums.indexOf(n)!==i); if(rep.length) e.push(`Números repetidos: ${[...new Set(rep)].join(', ')}`);  
+  return e;  
+}  
+function val6(nums) {  
+  const e=[];  
+  if(nums.length!==6) e.push(`Precisa de 6 números. Encontrado: ${nums.length}.`);  
+  const inv=nums.filter(n=>n<1||n>60); if(inv.length) e.push(`Fora do intervalo (1-60): ${inv.join(', ')}`);  
+  const rep=nums.filter((n,i)=>nums.indexOf(n)!==i); if(rep.length) e.push(`Repetidos: ${[...new Set(rep)].join(', ')}`);  
+  return e;  
+}  
+function getStatus(a) {  
+  if(a===6)return'🏆 VENCEDOR!!!'; if(a===5)return'😰 NA TRAVE'; if(a===4)return'🎯 TÁ PERTO';  
+  if(a===3)return'👀 QUASE LÁ'; if(a===2)return'😅 JÁ É ALGUMA COISA'; if(a===1)return'🫠 PELO MENOS UM';  
+  return'🥶 PÉ FRIO';  
+}  
+function acertoCor(a) {  
+  if(a>=6)return'#ffd700'; if(a>=5)return'#ff6b35'; if(a>=4)return'#00c9ff';  
+  if(a>=3)return'var(--verde)'; if(a>=1)return'var(--muted)'; return'var(--vermelho)';  
+}  
+function showAlert(el,type,msg) {  
+  el.className=`alert alert-${type} show`; el.textContent=msg;  
+  setTimeout(()=>el.className='alert',5000);  
+}  
+function showToast(msg) {  
+  const t=document.getElementById('toast'); t.textContent=msg;  
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000);  
+}  
+
+// ── BACKUP AUTOMÁTICO ─────────────────────────────────────
+var _backupTimer = null;
+function agendarBackupAuto() {
+  if (_backupTimer) clearTimeout(_backupTimer);
+  _backupTimer = setTimeout(prepararBackupAuto, 2000);
+}
+function prepararBackupAuto() {
+  try {
+    var json = JSON.stringify(db, null, 2);
+    var hoje = new Date().toLocaleDateString('pt-BR').split('/').join('-');
+    var filename = 'sorte-ponto-backup-' + hoje + '.json';
+    localStorage.setItem('sp_backup_pendente', JSON.stringify({json:json, filename:filename}));
+    var btn = document.getElementById('btn-backup-flutuante');
+    if (btn) btn.style.display = 'block';
+  } catch(e) {}
+}
+function enviarBackupICloud() {
+  try {
+    var salvo = localStorage.getItem('sp_backup_pendente');
+    if (!salvo) { exportarBackup(); return; }
+    var obj = JSON.parse(salvo);
+    var blob = new Blob([obj.json], {type:'application/json'});
+    var btn = document.getElementById('btn-backup-flutuante');
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent) && navigator.canShare) {
+      var file = new File([blob], obj.filename, {type:'application/json'});
+      if (navigator.canShare({files:[file]})) {
+        navigator.share({files:[file], title:'Backup Sorte & Ponto'}).then(function(){
+          if (btn) btn.style.display = 'none';
+          showToast('✅ Backup salvo!');
+        }).catch(function(){});
+        return;
+      }
+    }
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = obj.filename;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
+    if (btn) btn.style.display = 'none';
+    showToast('✅ Backup salvo!');
+  } catch(e) {}
+}
+
+// ── COMPARTILHAR / BAIXAR HTML ───────────────────────────
+function compartilharHTML(filename, html) {
+  var blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+  // iPhone: abre menu do iOS (WhatsApp, iCloud, etc)
+  if (/iPhone|iPad|iPod/i.test(navigator.userAgent) && navigator.canShare) {
+    var file = new File([blob], filename, {type: 'text/html'});
+    if (navigator.canShare({files: [file]})) {
+      navigator.share({files: [file], title: filename.replace('.html','')})
+        .catch(function(e) { if (e.name !== 'AbortError') baixarHTML(filename, blob); });
+      return;
+    }
+  }
+  // Mac/Desktop: download direto
+  baixarHTML(filename, blob);
+}
+function baixarHTML(filename, blob) {
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+// ── EXPORTAR HTML ─────────────────────────────────────────────
+function wrapHTML(titulo, conteudo) {
+  var css = 'body{background:#fff;color:#111;font-family:Arial,sans-serif;padding:16px;max-width:1200px;margin:0 auto}'
+    + 'h1{font-size:18px;color:#D4A017;margin-bottom:16px}'
+    + 'table{width:100%;border-collapse:collapse;font-size:11px}'
+    + 'th{background:#f0f0f0;padding:6px 4px;text-align:center;border-bottom:2px solid #D4A017;font-size:9px;text-transform:uppercase}'
+    + 'td{padding:5px 4px;border-bottom:1px solid #eee;color:#111}'
+    + 'tr:nth-child(even) td{background:#f9f9f9}'
+    + '.hdr{background:#D4A017;color:#000;padding:10px 14px;font-weight:900;font-size:13px;letter-spacing:2px}'
+    + '.wrap{border:2px solid #D4A017;border-radius:8px;overflow:hidden;margin-bottom:16px}'
+    + '.nome{font-weight:700;color:#111}'
+    + '.ball{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;font-size:9px;border:1px solid #ddd;background:#f0f0f0;color:#555;margin:1px}'
+    + '.ball.hit{background:#D4A017;color:#000;font-weight:700;border-color:#D4A017}'
+    + '.num-hdr{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#D4A017;color:#000;font-size:8px;font-weight:700}'
+    + '.rhdr{background:#fff8e6;border:2px solid #D4A017;border-radius:8px;padding:16px;margin-bottom:14px;text-align:center}'
+    + '.rtitulo{font-size:26px;font-weight:900;color:#D4A017;letter-spacing:3px}';
+  return '<!DOCTYPE html><html><head><meta charset="UTF-8">'
+    + '<meta name="viewport" content="width=device-width,initial-scale=1">'
+    + '<title>' + titulo + '</title>'
+    + '<style>' + css + '</style>'
+    + '</head><body>'
+    + '<h1>$ORTE &amp; PONTO — ' + titulo + '</h1>'
+    + conteudo
+    + '</body></html>';
+}
+
+function exportarPlanilhaHTML() {
+  var c = getAtivo(); if (!c) return;
+  if (!c.apostadores.length) { showToast('Nenhum apostador cadastrado.'); return; }
+  var jogosMap = {};
+  c.apostadores.forEach(function(a) {
+    var k = a.nome.toLowerCase();
+    jogosMap[k] = (jogosMap[k]||0) + 1;
+    a._jogoNum = jogosMap[k];
+  });
+  var sorted = c.apostadores.slice().sort(function(a,b) {
+    var n = a.nome.localeCompare(b.nome,'pt-BR');
+    return n !== 0 ? n : (a._jogoNum||0) - (b._jogoNum||0);
+  });
+  var ths = '<th style="text-align:center;background:#f0f0f0;border-bottom:2px solid #D4A017;padding:6px 4px">#</th>'
+    + '<th style="text-align:left;background:#f0f0f0;border-bottom:2px solid #D4A017;padding:6px 8px;min-width:140px">NOME</th>';
+  for (var i=0;i<25;i++) ths += '<th style="text-align:center;padding:4px 2px;background:#f0f0f0;border-bottom:2px solid #D4A017"><span class="num-hdr">'+(i+1)+'</span></th>';
+  var rows = sorted.map(function(a,i) {
+    var multi = c.apostadores.filter(function(x){return x.nome.toLowerCase()===a.nome.toLowerCase();}).length > 1;
+    var nome = multi ? a.nome+' <small style="color:#888">(J'+a._jogoNum+')</small>' : a.nome;
+    var tds = a.numeros.map(function(n){return '<td style="text-align:center;padding:4px 2px"><span class="ball">'+n+'</span></td>';}).join('');
+    var bg = i%2===0?'#fff':'#f9f9f9';
+    return '<tr style="background:'+bg+'"><td style="text-align:center;color:#888;padding:5px 4px">'+(i+1)+'</td><td class="nome" style="padding:5px 8px">'+nome+'</td>'+tds+'</tr>';
+  }).join('');
+  var corpo = '<div class="wrap"><div class="hdr">CONCURSO #'+c.numero+' — '+(c.data||'')+' — '+sorted.length+' apostadores</div>'
+    +'<div style="overflow-x:auto"><table><thead><tr>'+ths+'</tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+  compartilharHTML('planilha-'+c.numero+'.html', wrapHTML('Planilha #'+c.numero, corpo));
+  showToast('✅ Abrindo planilha...');
+}
+
+function exportarRelHTML() {
+  var c = getAtivo(); if (!c) return;
+  if (!c.sorteio) { showToast('Registre o sorteio primeiro.'); return; }
+  var nums = c.sorteio.numeros;
+  var sorted = c.apostadores.slice().sort(function(a,b){return (b.acertos||0)-(a.acertos||0);});
+  var sorteadosHTML = nums.map(function(n){return '<span class="ball hit">'+n+'</span>';}).join('');
+  var rows = sorted.map(function(a,i) {
+    var bolas = a.numeros.map(function(n){
+      var hit = nums.indexOf(n)>=0;
+      return '<span class="ball'+(hit?' hit':'')+'">'+n+'</span>';
+    }).join('');
+    var ac = a.acertos||0;
+    var cor = ac>=6?'#D4A017':ac>=5?'#22c55e':ac>=4?'#3b82f6':'#888';
+    var bg = i%2===0?'#fff':'#f9f9f9';
+    return '<tr style="background:'+bg+'">'
+      +'<td style="text-align:center;color:#888;padding:5px 4px">'+(i+1)+'</td>'
+      +'<td style="font-weight:700;padding:5px 8px">'+a.nome+'</td>'
+      +'<td style="text-align:center;color:'+cor+';font-weight:700">'+ac+'</td>'
+      +'<td style="color:'+cor+';padding:5px 4px">'+( a.status||'—')+'</td>'
+      +'<td style="padding:5px 4px">'+bolas+'</td>'
+      +'</tr>';
+  }).join('');
+  var corpo = '<div class="rhdr"><div class="rtitulo">CONCURSO #'+c.numero+'</div>'
+    +'<div style="font-size:12px;color:#666;margin:6px 0">'+(c.data||'')+'</div>'
+    +'<div>'+sorteadosHTML+'</div></div>'
+    +'<table><thead><tr>'
+    +'<th style="background:#f0f0f0;border-bottom:2px solid #D4A017;padding:6px 4px;text-align:center">#</th>'
+    +'<th style="background:#f0f0f0;border-bottom:2px solid #D4A017;padding:6px 8px;text-align:left">NOME</th>'
+    +'<th style="background:#f0f0f0;border-bottom:2px solid #D4A017;padding:6px 4px;text-align:center">PTS</th>'
+    +'<th style="background:#f0f0f0;border-bottom:2px solid #D4A017;padding:6px 4px;text-align:left">STATUS</th>'
+    +'<th style="background:#f0f0f0;border-bottom:2px solid #D4A017;padding:6px 4px;text-align:left">NÚMEROS</th>'
+    +'</tr></thead><tbody>'+rows+'</tbody></table>';
+  compartilharHTML('resultado-'+c.numero+'.html', wrapHTML('Resultado #'+c.numero, corpo));
+  showToast('✅ Abrindo resultado...');
+}
+</script>
+<button id="btn-backup-flutuante" onclick="enviarBackupICloud()">☁️ Salvar Backup</button>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
+
+// ── FIREBASE SYNC ─────────────────────────────────────────
+function conectarFirebase() {
+  var userId = document.getElementById('fb-user-id').value.trim().toLowerCase().replace(/[^a-z0-9]/g,'');
+  if (!userId) { showToast('Digite um código para sincronizar.'); return; }
+  localStorage.setItem('sp_fb_user', userId);
+  iniciarFirebase(userId);
+  document.getElementById('fb-status').innerHTML = '🟢 Conectado como: <b>' + userId + '</b>';
+  document.getElementById('fb-login-form').style.display = 'none';
+  document.getElementById('fb-logout-wrap').style.display = 'block';
+}
+function desconectarFirebase() {
+  if (fbRef) fbRef.off();
+  fbRef = null; fbSyncEnabled = false;
+  localStorage.removeItem('sp_fb_user');
+  document.getElementById('fb-status').textContent = '⚪ Não conectado';
+  document.getElementById('fb-login-form').style.display = 'block';
+  document.getElementById('fb-logout-wrap').style.display = 'none';
+  showToast('Desconectado da nuvem.');
+}
+function verificarLoginFirebase() {
+  var saved = localStorage.getItem('sp_fb_user');
+  if (!saved) return;
+  // Verificar se Firebase SDK está pronto
+  if (typeof firebase === 'undefined' || !firebase.database) {
+    setTimeout(verificarLoginFirebase, 1500);
+    return;
+  }
+  var userId = saved.toLowerCase().replace(/[^a-z0-9]/g,'');
+  // Atualizar campo de texto na UI
+  var inp = document.getElementById('fb-user-id');
+  if (inp) inp.value = saved;
+  // Conectar ao Firebase
+  if (fbRef) fbRef.off();
+  fbRef = firebase.database().ref('gestao/' + userId);
+  fbRef.on('value', function(snap) {
+    var data = snap.val();
+    if (data && data.json) {
+      try {
+        var parsed = JSON.parse(data.json);
+        if (parsed && parsed.concursos) {
+          db = parsed;
+          window._lastSaveTs = data.ts || Date.now();
+          try { popularSelects(); } catch(e) {}
+          try { atualizar(); } catch(e) {}
+          try { renderRecentes(); } catch(e) {}
+          try { renderDashboard(); } catch(e) {}
+          try { renderHistorico(); } catch(e) {}
+        }
+      } catch(e) {}
+    }
+    // Atualizar UI de status
+    var st = document.getElementById('fb-status');
+    if (st) st.innerHTML = '🟢 Conectado como: <b>' + userId + '</b>';
+    var lf = document.getElementById('fb-login-form');
+    if (lf) lf.style.display = 'none';
+    var lw = document.getElementById('fb-logout-wrap');
+    if (lw) lw.style.display = 'block';
+  });
+  fbSyncEnabled = true;
+}
+</script>
+  
+</body>  
+</html>
