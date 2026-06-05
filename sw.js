@@ -1,8 +1,6 @@
-const CACHE = 'sorte-ponto-1780367196';
+const CACHE = 'sorte-ponto-v20260605';
 
-self.addEventListener('install', e => {
-  self.skipWaiting();
-});
+self.addEventListener('install', e => { self.skipWaiting(); });
 
 self.addEventListener('activate', e => {
   e.waitUntil(
